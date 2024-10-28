@@ -4,16 +4,19 @@ import ProductsPage from "./Pages/ProductsPage";
 import DetailsPages from "./Pages/DetailsPages";
 import CheckoutPage from "./Pages/CheckoutPage";
 import NotFound from "./Pages/NotFound";
+import { ProductsProvider } from "./contex/ProductsContext";
 
 function App() {
   return (
+    <ProductsProvider>
     <Routes>
-      <Route path="/" element={<Homepage />} />
+      <Route path="/" element={< Homepage/>} />
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/products/:id" element={<DetailsPages />} />
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </ProductsProvider>
   );
 }
 
