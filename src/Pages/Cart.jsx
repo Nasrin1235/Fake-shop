@@ -1,50 +1,17 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
 import { Product } from '../components/Product'
 import { NavLink } from 'react-router-dom'
 import './cart.css'
 
 function Cart() {
-  const { products } = useContext(ProductContext)
+  const { AddToCard, clearCart, totalPrice, totolItems, productsIncart} = useContext(ProductContext)
   const randomId = Math.floor(Math.random() * 20)
 
-  const [productsIncart, setProductsIncart] = useState(() => {
-    const savedCart = localStorage.getItem('productsIncart')
-    return savedCart ? JSON.parse(savedCart) : []
-  })
-
-  const totolItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
-  const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0)
 
   useEffect(() => {
     localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
   }, [productsIncart])
-
-  function AddToCard(id) {
-    setProductsIncart(
-      preCart => {
-        const existingProduct = productsIncart.find(product => product.id === id)
-        if (existingProduct) {
-          return preCart.map(product =>
-            product.id === id
-              ? { ...product, quantity: product.quantity + 1 }
-              : product
-          )
-        }
-
-        const newProduct = products.find(product => product.id === id)
-        if (newProduct) {
-          return [...preCart, { ...newProduct, quantity: 1 }]
-        }
-        return preCart
-      }
-    )
-    console.log(productsIncart)
-  }
-
-  function clearCart() {
-    setProductsIncart([])
-  }
 
   return (
     <div className='cart'>
