@@ -1,11 +1,20 @@
-.cart {
-  margin: 2rem auto;
-  width: 60%;
+.cartPage {
+  background-color:rgb(202, 202, 202);
+  color: black;
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
 
   * {
     padding:0;
     margin:0;
     box-sizing: border-box;
+  }
+
+  section {
+    background-color: rgb(166, 186, 186);
+    width: 60%;
+    margin: 0 auto;
   }
 
   h1, li {
@@ -49,6 +58,7 @@
   }
 
   .product {
+    padding: 1rem;
     height: 15rem;
     display: flex;
     justify-content: space-between;
