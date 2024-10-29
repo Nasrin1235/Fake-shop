@@ -59,7 +59,7 @@ function ProductsProvider({ children }) {
 
         const newProduct = products.find(product => product.id === id)
         if (newProduct) {
-          return [...preCart, { ...newProduct, quantity: 1 }]
+          return [{ ...newProduct, quantity: 1 }, ...preCart]
         }
         return preCart
       }
