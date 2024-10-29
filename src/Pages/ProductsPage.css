@@ -1,0 +1,12 @@
+.ProductsPage {
+  min-height: 100svh;
+  background-color: white;
+  padding:2rem;
+  color: black;
+
+  ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+  }
+}

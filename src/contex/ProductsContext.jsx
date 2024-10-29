@@ -6,6 +6,7 @@ const ProductContext = createContext();
 
 function ProductsProvider({ children }) {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [productsIncart, setProductsIncart] = useState(() => {
     const savedCart = localStorage.getItem('productsIncart')
     return savedCart ? JSON.parse(savedCart) : []
@@ -22,14 +23,25 @@ function ProductsProvider({ children }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await api.get("/products");
-        console.log("Fetched Products:", response);
-        setProducts(response);
+        const products = await api.get("/products");
+        console.log("Fetched Products:", products);
+        setProducts(products);
       } catch (error) {
         console.error("Error fetching products:", error.message);
       }
     };
+
+    const fetchCategories = async () => {
+      try {
+        const categories = await api.get("/products/categories");
+        console.log("Fetched Categories:", categories);
+        setCategories(categories);
+      } catch (error) {
+        console.error("Error fetching categories:", error.message);
+      }
+    };
     fetchProducts();
+    fetchCategories();
   }, []);
 
   useEffect(() => {
@@ -91,7 +103,7 @@ function ProductsProvider({ children }) {
   }
 
   return (
-    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, AddToCart, clearCart, deleteProduct, modeSwitch }}>
+    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, categories, AddToCart, clearCart, deleteProduct, modeSwitch }}>
       {children}
     </ProductContext.Provider>
   );
