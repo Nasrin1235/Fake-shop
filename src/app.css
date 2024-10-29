@@ -1,0 +1,19 @@
+.app {
+  min-height: 100svh;
+  background-color: white;
+  color: black;
+
+  button[data-role="mode"] {
+    padding: 0.2rem 0.5rem;
+
+    &:hover {
+      background-color: rgb(15, 100, 100);
+      color: white;
+    }
+  }
+}
+
+.dark {
+  background-color: black;
+  color: white;
+}
