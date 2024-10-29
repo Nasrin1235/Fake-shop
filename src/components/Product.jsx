@@ -2,11 +2,12 @@ import { useContext, useEffect } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
 
 export function Product({ id }) {
-  const { products } = useContext(ProductContext)
-  const product = products.find(product => product.id === id)
+  const { productsIncart } = useContext(ProductContext)
+  const product = productsIncart.find(product => product.id === id)
   function deleteItem() {
   }
   if (!product) return null;
+  console.log(product)
   return (
     <div className="product">
       <img src={product.image} alt={product.title} />
