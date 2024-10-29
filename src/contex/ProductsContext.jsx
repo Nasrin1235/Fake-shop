@@ -24,6 +24,7 @@ function ProductsProvider({ children }) {
         console.error("Error fetching products:", error.message);
       }
     };
+    
 
     fetchProducts();
   }, []);
