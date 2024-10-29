@@ -1,6 +1,6 @@
 // src/context/ProductsContext.jsx
-import { createContext, useEffect, useState } from "react";
-import { api } from "../services/config";
+import { createContext, useEffect, useState } from "react"; 
+import { api } from "../services/config";                               
 
 const ProductContext = createContext();
 
