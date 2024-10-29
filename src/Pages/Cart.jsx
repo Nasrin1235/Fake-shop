@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
 import { Product } from '../components/Product'
 import { NavLink } from 'react-router-dom'

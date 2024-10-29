@@ -5,15 +5,20 @@ import DetailsPages from "./Pages/DetailsPages";
 import Cart from "./Pages/Cart";
 import CheckoutPage from "./Pages/CheckoutPage";
 import NotFound from "./Pages/NotFound";
-import { ProductsProvider } from "./contex/ProductsContext";
+import { useContext } from "react";
+import { ProductContext } from "./contex/ProductsContext";
+import "./app.css";
 import Layout from "./Pages/Layout";
 
 function App() {
-  const { mode, modeSwitch } = useContext(ProductContext)
-  const modeClass = mode === 'lightMode' ? 'app' : 'app dark'
+  const { mode, modeSwitch } = useContext(ProductContext);
+  const modeClass = mode === "lightMode" ? "app" : "app dark";
 
   return (
-    <ProductsProvider>
+    <div className={modeClass}>
+      <button onClick={modeSwitch} data-role="mode">
+        {mode}
+      </button>
       <Layout>
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -24,7 +29,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
-    </ProductsProvider>
+    </div>
   );
 }
 

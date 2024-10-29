@@ -33,6 +33,7 @@ const Layout = ({ children }) => {
 
       <main>{children}</main>
 
+
       <footer className="footer">
         <p>© {new Date().getFullYear()} Fake Shop. All rights reserved.</p>
       </footer>
