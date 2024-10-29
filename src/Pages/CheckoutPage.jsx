@@ -229,10 +229,12 @@ function CheckoutPage() {
               <p>Your basket is empty.</p>
             )}
           </ul>
-          <p>Total: €{calculateTotal()}</p>
-          <button className="continue-shopping">
-            <NavLink to="/products">Continue Shopping</NavLink>
-          </button>
+          <p className="total">Total: €{calculateTotal()}</p>
+        
+          <NavLink className="continue-shopping" to="/products">
+        Continue Shopping
+      </NavLink>
+         
         </section>
       </div>
     </div>
