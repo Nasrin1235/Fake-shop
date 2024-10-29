@@ -11,6 +11,8 @@ function ProductsProvider({ children }) {
     return savedCart ? JSON.parse(savedCart) : []
   })
 
+  const [mode, setMode] = useState('LightMode')
+
   const totalItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
   const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0).toFixed(2)
 
@@ -29,7 +31,8 @@ function ProductsProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
-  }, [productsIncart])
+    localStorage.setItem('mode', JSON.stringify(mode));
+  }, [productsIncart, mode])
 
   useEffect(() => {
     const handleStorageChange = (event) => {
@@ -43,6 +46,11 @@ function ProductsProvider({ children }) {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, [])
+
+  function modeSwitch() {
+    const newMode = mode === 'lightMode' ? 'darkMode' : 'lightMode'
+    setMode(newMode)
+  }
 
   function deleteProduct(id) {
     const newCart = productsIncart.filter(product => product.id !== id)
@@ -80,7 +88,7 @@ function ProductsProvider({ children }) {
   }
 
   return (
-    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, AddToCart, clearCart, deleteProduct }}>
+    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, AddToCart, clearCart, deleteProduct, modeSwitch }}>
       {children}
     </ProductContext.Provider>
   );
