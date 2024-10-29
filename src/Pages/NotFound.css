@@ -8,17 +8,16 @@
 .not-found {
   background: linear-gradient(135deg, #d7dbdd, #121113);
   height: 100vh;
-
   text-align: center;
 }
-h2 {
-  margin-top: 20px;
+.not-found-title {
+ 
   font-size: 18vw;
   color: #fff;
   line-height: 1em;
   position: relative;
 }
-h4 {
+.not-found-subtitle {
   position: relative;
   font-size: 1.5em;
   margin-bottom: 20px;
@@ -28,11 +27,11 @@ h4 {
   padding: 10px 20px;
   display: inline-block;
 }
-p {
+.not-found-message {
   font-size: 1.2em;
   color: #fff;
 }
-a {
+.not-found-link {
   position: relative;
   display: inline-block;
   padding: 10px 25px;
