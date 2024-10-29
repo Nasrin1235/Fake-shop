@@ -1,6 +1,6 @@
 // src/context/ProductsContext.jsx
-import { createContext, useEffect, useState } from "react"; 
-import { api } from "../services/config";                               
+import { createContext, useEffect, useState } from "react";
+import { api } from "../services/config";
 
 const ProductContext = createContext();
 
@@ -10,7 +10,7 @@ function ProductsProvider({ children }) {
     const savedCart = localStorage.getItem('productsIncart')
     return savedCart ? JSON.parse(savedCart) : []
   })
-  
+
   const totalItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
   const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0).toFixed(2)
 
@@ -44,16 +44,24 @@ function ProductsProvider({ children }) {
     };
   }, [])
 
-  function AddToCard(id) {
+  function deleteProduct(id) {
+    const newCart = productsIncart.filter(product => product.id !== id)
+    setProductsIncart(newCart)
+  }
+
+  function AddToCart(id, Increment = 1) {
     setProductsIncart(
       preCart => {
         const existingProduct = preCart.find(product => product.id === id)
         if (existingProduct) {
-          return preCart.map(product =>
-            product.id === id
-              ? { ...product, quantity: product.quantity + 1 }
-              : product
-          )
+          if (existingProduct.quantity + Increment > 0)
+            return preCart.map(product =>
+              product.id === id
+                ? { ...product, quantity: product.quantity + Increment }
+                : product
+            )
+          else
+            return preCart.filter(product => product.id !== id)
         }
 
         const newProduct = products.find(product => product.id === id)
@@ -72,7 +80,7 @@ function ProductsProvider({ children }) {
   }
 
   return (
-    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, AddToCard, clearCart, }}>
+    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, AddToCart, clearCart, deleteProduct }}>
       {children}
     </ProductContext.Provider>
   );

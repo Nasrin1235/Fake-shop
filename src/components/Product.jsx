@@ -2,10 +2,9 @@ import { useContext, useEffect } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
 
 export function Product({ id }) {
-  const { productsIncart } = useContext(ProductContext)
+  const { productsIncart, deleteProduct, AddToCart } = useContext(ProductContext)
   const product = productsIncart.find(product => product.id === id)
-  function deleteItem() {
-  }
+
   if (!product) return null;
   console.log(product)
   return (
@@ -15,14 +14,14 @@ export function Product({ id }) {
         <h3>{product.title}</h3>
         <p className="info">{product.description}</p>
         <div>
-          <button>-</button>
+          <button onClick={() => AddToCart(id, -1)}>-</button>
           <span>{product.quantity}</span>
-          <button>+</button>
+          <button onClick={() => AddToCart(id, 1)}>+</button>
         </div>
       </div>
       <div className="priceColumn">
         <p>{product.price} €</p>
-        <button data-role="delete" onClick={() => deleteItem(id)}>Delete</button>
+        <button data-role="delete" onClick={() => deleteProduct(id)}>Delete</button>
       </div>
     </div>
   )
