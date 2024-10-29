@@ -6,7 +6,7 @@ import "./DetailsPage.css";
 
 function DetailPages() {
   const { id } = useParams();
-  const { products } = useContext(ProductContext);
+  const { products, AddToCard } = useContext(ProductContext); 
   const result = products.find((product) => product.id === Number(id));
 
   if (!result) return <h1>Product not found</h1>;
@@ -39,7 +39,6 @@ function DetailPages() {
     );
   };
 
-  // Ezafe kardane size-ha bar asas kategori
   const sizes =
     result.category === "men's clothing" ||
     result.category === "women's clothing"
@@ -55,13 +54,11 @@ function DetailPages() {
         <p className="category">{result.category}</p>
         <span className="price">Price: {result.price} $</span>
 
-        {/* Rating */}
         <div className="rating">
           <div className="stars">{renderStars(rate)}</div>
           <p>({count} reviews)</p>
         </div>
 
-        {/* Namayesh size-ha bar asas kategori */}
         {sizes.length > 0 && (
           <div className="sizes">
             <p>Select Size:</p>
@@ -72,7 +69,17 @@ function DetailPages() {
             ))}
           </div>
         )}
-        <a href="">Add to </a>
+
+        {/* Add to Cart Button */}
+        <a
+          onClick={() => {
+            AddToCard(result.id);
+            console.log("Added to cart:", result.title); // Console log  test
+          }}
+        >
+          Add to Cart
+        </a>
+
         <Link to="/products">Back to shop</Link>
       </div>
     </div>
