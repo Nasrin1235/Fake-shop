@@ -6,19 +6,25 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Header.css";
 import "./Footer.css";
+import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { ProductContext } from "../contex/ProductsContext";
 
 const Layout = ({ children }) => {
+  const { totalItems } = useContext(ProductContext);
   return (
     <div>
       <header className="header">
         <a className="shop-name">Shop</a>
         <div className="header-icons">
-          <a>
+          <NavLink to="/checkout" className="icon">
             <FontAwesomeIcon icon={faUser} className="icon" />
-          </a>
-          <a href="/cart">
-            <FontAwesomeIcon icon={faBasketShopping} className="icon" />
-          </a>
+          </NavLink>
+
+          <NavLink to="/cart" className="icon">
+            <FontAwesomeIcon icon={faBasketShopping} />
+            {totalItems > 0 && <span className="item-count">{totalItems}</span>}
+          </NavLink>
           <a>
             <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
           </a>

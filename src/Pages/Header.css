@@ -24,5 +24,16 @@ a {
   color: rgb(0, 0, 0);
   font-size: 1.2em;
   cursor: pointer;
+  position: relative
+}
+.item-count {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 12px;
 }
 }
