@@ -1,13 +1,17 @@
 import { useContext } from "react";
 import { ProductContext } from "../contex/ProductsContext";
+import { Outlet } from "react-router-dom";
+
+
 
 function ProductsPage() {
   const { products } = useContext(ProductContext);
-  console.log(products);
+
 
   return (
     <div>
       <h1>Products</h1>
+      <Outlet />
     </div>
   );
 }

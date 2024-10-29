@@ -15,7 +15,10 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products" element={<ProductsPage />}>
+          <Route index element={<Navigate to="category/all" replace />} />
+          <Route path="category/:category" element={<Category />} />
+        </Route>
         <Route path="/products/:id" element={<DetailsPages />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<CheckoutPage />} />
