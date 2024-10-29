@@ -8,9 +8,9 @@ function DetailPages() {
   const { id } = useParams();
   const { products, AddToCart, productsIncart } = useContext(ProductContext);
   const result = products.find((product) => product.id === Number(id));
-  console.log('result:', result)
+  console.log("result:", result);
   // AddToCard(1)
-  console.log('productsIncart:', productsIncart)
+  console.log("productsIncart:", productsIncart);
 
   if (!result) return <h1>Product not found</h1>;
 
@@ -78,6 +78,7 @@ function DetailPages() {
           onClick={() => {
             AddToCart(result.id);
             console.log("Added to cart:", result.title); // Console log test
+            window.location.href = "/cart";
           }}
         >
           Add to Cart

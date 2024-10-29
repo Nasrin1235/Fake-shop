@@ -1,5 +1,5 @@
 .cartPage {
-  background-color:rgb(202, 202, 202);
+  background-color:rgb(255, 255, 255);
   color: black;
   padding:0;
   margin:0;
@@ -13,13 +13,13 @@
   }
 
   section {
-    background-color: rgb(166, 186, 186);
+    background-color: rgb(240, 240, 240);
     width: 60%;
     margin: 0 auto;
   }
 
   h1, li {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid rgb(138, 138, 138);
     padding-block: 1rem;
   }
 
