@@ -7,6 +7,7 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import NotFound from "./Pages/NotFound";
 import { ProductsProvider } from "./contex/ProductsContext";
 
+
 function App() {
   return (
     <ProductsProvider>

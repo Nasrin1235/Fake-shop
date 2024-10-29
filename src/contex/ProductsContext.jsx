@@ -1,6 +1,6 @@
 // src/context/ProductsContext.jsx
-import { createContext, useEffect, useState } from "react";
-import { api } from "../services/config";
+import { createContext, useEffect, useState } from "react"; 
+import { api } from "../services/config";                               
 
 const ProductContext = createContext();
 
@@ -29,10 +29,14 @@ function ProductsProvider({ children }) {
   }, [productsIncart]);
 
 
+  useEffect(() => {
+    localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
+  }, [productsIncart])
+
   function AddToCard(id) {
     setProductsIncart(
       preCart => {
-        const existingProduct = productsIncart.find(product => product.id === id)
+        const existingProduct = preCart.find(product => product.id === id)
         if (existingProduct) {
           return preCart.map(product =>
             product.id === id
@@ -48,6 +52,7 @@ function ProductsProvider({ children }) {
         return preCart
       }
     )
+    console.log(productsIncart)
   }
 
   function clearCart() {
