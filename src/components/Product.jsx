@@ -7,6 +7,7 @@ export function Product({ id }) {
   function deleteItem() {
   }
   if (!product) return null;
+  console.log(product)
   return (
     <div className="product">
       <img src={product.image} alt={product.title} />

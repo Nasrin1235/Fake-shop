@@ -9,9 +9,9 @@ function Cart() {
   const randomId = Math.floor(Math.random() * 20)
 
 
-  useEffect(() => {
-    localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
-  }, [productsIncart])
+  // useEffect(() => {
+  //   localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
+  // }, [productsIncart])
 
   return (
     <div className='cartPage'>

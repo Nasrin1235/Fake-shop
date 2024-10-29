@@ -6,8 +6,11 @@ import "./DetailsPage.css";
 
 function DetailPages() {
   const { id } = useParams();
-  const { products, AddToCard } = useContext(ProductContext);
+  const { products, AddToCard, productsIncart } = useContext(ProductContext);
   const result = products.find((product) => product.id === Number(id));
+  console.log('result:', result)
+  // AddToCard(1)
+  console.log('productsIncart:', productsIncart)
 
   if (!result) return <h1>Product not found</h1>;
 

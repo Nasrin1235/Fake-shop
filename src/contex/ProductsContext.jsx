@@ -29,10 +29,14 @@ function ProductsProvider({ children }) {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
+  }, [productsIncart])
+
   function AddToCard(id) {
     setProductsIncart(
       preCart => {
-        const existingProduct = productsIncart.find(product => product.id === id)
+        const existingProduct = preCart.find(product => product.id === id)
         if (existingProduct) {
           return preCart.map(product =>
             product.id === id
@@ -48,6 +52,7 @@ function ProductsProvider({ children }) {
         return preCart
       }
     )
+    console.log(productsIncart)
   }
 
   function clearCart() {
