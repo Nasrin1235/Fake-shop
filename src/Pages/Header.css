@@ -1,0 +1,28 @@
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border-bottom: 1px solid black;
+
+
+a {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.header-icons {
+  display: flex;
+  gap: 3rem;
+  padding: .5rem 1rem;
+}
+
+.icon {
+  color: rgb(0, 0, 0);
+  font-size: 1.2em;
+  cursor: pointer;
+}
+}
