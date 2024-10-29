@@ -24,10 +24,10 @@ function ProductsProvider({ children }) {
         console.error("Error fetching products:", error.message);
       }
     };
-    
-
     fetchProducts();
-  }, []);
+    localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
+  }, [productsIncart]);
+
 
   useEffect(() => {
     localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
