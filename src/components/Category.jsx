@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useContext } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
-
+import {ProductOfCaterory} from '../components/ProductOfCaterory'
 
 export default function Category() {
   const { category } = useParams()
@@ -9,11 +9,11 @@ export default function Category() {
   const { categories, products } = useContext(ProductContext)
   if (category === 'all')
     return (
-      <div>
+      <ul>
         {products.map(
-          product => <p key={product.id}>{product.title}</p>
+          product => <ProductOfCaterory key={product.id}/>
         )}
-      </div>
+      </ul>
     )
   else if (categories.includes(category)) {
     const productsInCategory = products.filter(
@@ -21,11 +21,11 @@ export default function Category() {
     )
     if (productsInCategory.length > 0)
       return (
-        <div>
+        <ul>
           {productsInCategory.map(
-            product => <p key={product.id}>{product.title}</p>
+            product => <ProductOfCaterory key={product.id}/>
           )}
-        </div>
+        </ul>
       )
   }
   else

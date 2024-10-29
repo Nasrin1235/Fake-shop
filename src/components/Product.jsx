@@ -8,7 +8,7 @@ export function Product({ id }) {
   if (!product) return null;
   console.log(product)
   return (
-    <div className="product">
+    <li className="product">
       <img src={product.image} alt={product.title} />
       <div>
         <h3>{product.title}</h3>
@@ -23,6 +23,6 @@ export function Product({ id }) {
         <p>{product.price} €</p>
         <button data-role="delete" onClick={() => deleteProduct(id)}>Delete</button>
       </div>
-    </div>
+    </li>
   )
 }

@@ -16,11 +16,10 @@ function Cart() {
         <ul>
           {productsIncart.length > 0
             ? productsIncart.map(product => (
-              <li key={product.id}>
-                <Product 
-                id={product.id}
-                />
-              </li>
+              <Product
+                key={product.id}
+                id = {product.id}
+              />
             ))
             : <p>Your basket is empty.</p>
           }
