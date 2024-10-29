@@ -8,14 +8,10 @@ function Cart() {
   const { AddToCart, clearCart, totalPrice, totalItems, productsIncart } = useContext(ProductContext)
   const randomId = Math.floor(Math.random() * 20)
 
-
- 
-
   return (
     <div className='cartPage'>
       <section>
         <button onClick={() => AddToCart(randomId)}>add one to cart</button><br />
-        <button onClick={clearCart}>clear cart</button>
         <h1>Shopping Basket</h1>
         <ul>
           {productsIncart.length > 0

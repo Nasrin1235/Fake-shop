@@ -9,6 +9,9 @@ import { ProductsProvider } from "./contex/ProductsContext";
 import Layout from "./Pages/Layout";
 
 function App() {
+  const { mode, modeSwitch } = useContext(ProductContext)
+  const modeClass = mode === 'lightMode' ? 'app' : 'app dark'
+
   return (
     <ProductsProvider>
       <Layout>
