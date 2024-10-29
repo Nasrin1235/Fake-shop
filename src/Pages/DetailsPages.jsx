@@ -6,7 +6,7 @@ import "./DetailsPage.css";
 
 function DetailPages() {
   const { id } = useParams();
-  const { products, AddToCard } = useContext(ProductContext); 
+  const { products, AddToCard } = useContext(ProductContext);
   const result = products.find((product) => product.id === Number(id));
 
   if (!result) return <h1>Product not found</h1>;
@@ -74,7 +74,7 @@ function DetailPages() {
         <a
           onClick={() => {
             AddToCard(result.id);
-            console.log("Added to cart:", result.title); // Console log  test
+            console.log("Added to cart:", result.title); // Console log test
           }}
         >
           Add to Cart
