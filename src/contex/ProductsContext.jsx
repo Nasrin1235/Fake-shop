@@ -24,10 +24,10 @@ function ProductsProvider({ children }) {
         console.error("Error fetching products:", error.message);
       }
     };
-    
-
     fetchProducts();
-  }, []);
+    localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
+  }, [productsIncart]);
+
 
   function AddToCard(id) {
     setProductsIncart(
