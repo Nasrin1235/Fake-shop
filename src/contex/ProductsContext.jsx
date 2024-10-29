@@ -11,8 +11,8 @@ function ProductsProvider({ children }) {
     return savedCart ? JSON.parse(savedCart) : []
   })
   
-  const totolItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
-  const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0)
+  const totalItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
+  const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0).toFixed(2)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -55,7 +55,7 @@ function ProductsProvider({ children }) {
   }
 
   return (
-    <ProductContext.Provider value={{ products, productsIncart, totolItems, totalPrice, AddToCard, clearCart, }}>
+    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, AddToCard, clearCart, }}>
       {children}
     </ProductContext.Provider>
   );
