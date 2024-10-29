@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import './cart.css'
 
 function Cart() {
-  const { AddToCard, clearCart, totalPrice, totalItems, productsIncart } = useContext(ProductContext)
+  const { AddToCart, clearCart, totalPrice, totalItems, productsIncart } = useContext(ProductContext)
   const randomId = Math.floor(Math.random() * 20)
 
 
@@ -14,7 +14,7 @@ function Cart() {
   return (
     <div className='cartPage'>
       <section>
-        <button onClick={() => AddToCard(randomId)}>add one to cart</button><br />
+        <button onClick={() => AddToCart(randomId)}>add one to cart</button><br />
         <button onClick={clearCart}>clear cart</button>
         <h1>Shopping Basket</h1>
         <ul>
@@ -30,7 +30,7 @@ function Cart() {
           }
         </ul>
         <div className='total'>
-          <button data-role="clear">Clear Basket</button>
+          <button data-role="clear" onClick={clearCart}>Clear Basket</button>
           <div>
             <span>{`Total ${totalItems} items: ${totalPrice} €`}</span>
             <NavLink to="/checkout">Proceed to Checkout</NavLink>

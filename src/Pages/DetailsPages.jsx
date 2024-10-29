@@ -6,7 +6,7 @@ import "./DetailsPage.css";
 
 function DetailPages() {
   const { id } = useParams();
-  const { products, AddToCard, productsIncart } = useContext(ProductContext);
+  const { products, AddToCart, productsIncart } = useContext(ProductContext);
   const result = products.find((product) => product.id === Number(id));
   console.log('result:', result)
   // AddToCard(1)
@@ -76,7 +76,7 @@ function DetailPages() {
         {/* Add to Cart Button */}
         <a
           onClick={() => {
-            AddToCard(result.id);
+            AddToCart(result.id);
             console.log("Added to cart:", result.title); // Console log test
           }}
         >
