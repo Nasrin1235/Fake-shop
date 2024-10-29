@@ -6,11 +6,13 @@ import Cart from "./Pages/Cart";
 import CheckoutPage from "./Pages/CheckoutPage";
 import NotFound from "./Pages/NotFound";
 import { ProductsProvider } from "./contex/ProductsContext";
+import Layout from "./Pages/Layout";
 
 
 function App() {
   return (
     <ProductsProvider>
+      <Layout >
     <Routes>
       <Route path="/" element={< Homepage/>} />
       <Route path="/products" element={<ProductsPage />} />
@@ -19,6 +21,7 @@ function App() {
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </Layout>
     </ProductsProvider>
   );
 }
