@@ -27,7 +27,6 @@ function ProductsProvider({ children }) {
     fetchProducts();
   }, []);
 
-
   useEffect(() => {
     localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
   }, [productsIncart])
