@@ -10,7 +10,10 @@ function ProductsProvider({ children }) {
     return savedCart ? JSON.parse(savedCart) : []
   })
 
-  const [mode, setMode] = useState('LightMode')
+  const [mode, setMode] = useState(() => {
+    const savedMode = localStorage.getItem('mode')
+    return savedMode ? JSON.parse(savedMode) : 'lightMode'
+  })
 
   const totalItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
   const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0).toFixed(2)

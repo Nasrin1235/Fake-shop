@@ -7,6 +7,17 @@
   color: rgb(0, 0, 0);
   border-bottom: 1px solid black;
 
+  button[data-role="mode"] {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 4px solid black;
+
+    &:active {
+      transform: scale(1.1);
+    }
+  }
+
   a {
     font-size: 1.5em;
     font-weight: bold;
@@ -15,7 +26,7 @@
   .header-icons {
     display: flex;
     gap: 3rem;
-    padding: 0.5rem 1rem;
+    padding: .5rem 1rem;
   }
 
   .icon {
@@ -34,4 +45,9 @@
     padding: 2px 5px;
     font-size: 12px;
   }
+}
+
+.dark {
+  background-color: black;
+  color: white;
 }
