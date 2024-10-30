@@ -53,13 +53,17 @@ function ProductsProvider({ children }) {
       if (event.key === 'productsIncart') {
         const updatedCart = JSON.parse(event.newValue);
         setProductsIncart(updatedCart);
+      } else if (event.key === 'mode') {
+        const updatedMode = JSON.parse(event.newValue);
+        setMode(updatedMode);
       }
     };
+  
     window.addEventListener('storage', handleStorageChange);
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, [])
+  }, []);
 
   function modeSwitch() {
     const newMode = mode === 'lightMode' ? 'darkMode' : 'lightMode'

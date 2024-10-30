@@ -1,5 +1,4 @@
 .cartPage {
-  /* background-color:rgb(255, 255, 255); */
   color: black;
   padding: 0;
   margin: 0;
@@ -14,7 +13,8 @@
   }
 
   section {
-    background-color: rgb(240, 240, 240);
+    color: black;
+    background-color: rgb(220, 220, 220);
     width: 60%;
     /* min-height: 100svh; */
     margin: 0 auto;
@@ -106,17 +106,13 @@
         overflow: auto;
         height: 4.5rem;
         margin-block: 0.5rem;
-        color: black;
+        color: rgb(0, 0, 0);
       }
+
       .info::-webkit-scrollbar {
         display: none;
       }
     }
-
-
-
-
- 
 
     .priceColumn {
       width: 20%;
@@ -131,4 +127,19 @@
       }
     }
   }
+}
+
+.cartPageDark {
+  background-color: rgb(41, 41, 41);
+  color: white;
+
+  section {
+    background-color: rgb(88, 88, 88);
+    color: white;
+  }
+
+  #price {
+    color: white;
+  }
+
 }
