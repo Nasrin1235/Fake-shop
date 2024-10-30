@@ -60,10 +60,6 @@
     color: black;
     width: auto;
     border-radius: 0;
-
-    &:hover {
-      transform: scale(1.1);
-    }
   }
 
   .total {
