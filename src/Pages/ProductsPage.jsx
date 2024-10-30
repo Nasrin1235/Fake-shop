@@ -7,7 +7,7 @@ import './ProductsPage.css'
 
 function ProductsPage() {
   const { products, categories, mode } = useContext(ProductContext);
-  const showMode = mode === 'lightMode' ? "ProductsPage" : "ProductsPage dark"
+  const showMode = mode === 'lightMode' ? "ProductsPage" : "ProductsPage ProductsPageDark"
 
   return (
     <div className={showMode}>
