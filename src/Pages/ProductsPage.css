@@ -1,12 +1,65 @@
 .ProductsPage {
   min-height: 100svh;
-  background-color: white;
+  background-color: rgb(238, 238, 238);
   padding:2rem;
   color: black;
 
-  ul {
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .active {
+    text-decoration:underline;
+    text-underline-offset: 7px; 
+  }
+
+  nav ul {
     display: flex;
-    justify-content: space-around;
     list-style: none;
+    justify-content: space-around;
+  }
+
+  .notFound {
+    text-align: center;
+    margin: 5rem auto;
+  }
+
+  .productsInCategory {
+    padding:2rem;
+    gap:2rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+
+    li {
+      margin-block: 1rem;
+      width: 20%;
+      aspect-ratio: 4/7;
+      overflow: hidden;
+      background-color: rgb(225, 225, 225);
+
+      img {
+        width: 100%;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+      }
+
+      p {
+        padding:0.5rem 1rem;
+      }
+
+      p.productTitle {
+        height: 4vw;
+        font-size: 1.1vw;
+        overflow: hidden;
+      }
+
+      p.productPrice {
+        font-size: 1.1vw;
+        font-weight: bold;
+      }
+    }
   }
 }

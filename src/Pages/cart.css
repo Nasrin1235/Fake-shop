@@ -87,7 +87,6 @@
     }
 
     .info {
-      height: 7rem;
       overflow: auto;
       margin-block: 0.5rem;
       color: black;
@@ -104,6 +103,7 @@
 
       p {
         color: black;
+        font-weight: bold;
       }
     }
   }
