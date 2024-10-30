@@ -18,8 +18,8 @@ const Layout = ({ children }) => {
   const { totalItems } = useContext(ProductContext);
   return (
     <div>
-      <header className='header'>
-        <a className="shop-name">Shop</a>
+      <header className="header">
+        <a className="shop-name">OLN</a>
         <div className="header-icons">
           <button data-role="mode" onClick={modeSwitch} className={showMode}></button>
           <NavLink to="/checkout" className="icon">
