@@ -1,8 +1,16 @@
 .ProductsPage {
   min-height: 100svh;
   background-color: rgb(238, 238, 238);
-  padding:2rem;
+  padding: 2rem;
   color: black;
+  display: flex;
+  justify-content: center;
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
   a {
     text-decoration: none;
@@ -10,14 +18,15 @@
   }
 
   .active {
-    text-decoration:underline;
-    text-underline-offset: 7px; 
+    text-decoration: underline;
+    text-underline-offset: 7px;
   }
 
   nav ul {
     display: flex;
     list-style: none;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 10%;
   }
 
   .notFound {
@@ -26,8 +35,8 @@
   }
 
   .productsInCategory {
-    padding:2rem;
-    gap:2rem;
+    padding: 2rem;
+    gap: 5%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -35,8 +44,8 @@
 
     li {
       margin-block: 1rem;
-      width: 20%;
-      aspect-ratio: 4/7;
+      width: 10rem;
+      aspect-ratio: 1/2;
       overflow: hidden;
       background-color: rgb(225, 225, 225);
 
@@ -47,18 +56,63 @@
       }
 
       p {
-        padding:0.5rem 1rem;
+        padding: 0.5rem 1rem;
       }
 
       p.productTitle {
-        height: 4vw;
-        font-size: 1.1vw;
+        height: 3.5rem;
         overflow: hidden;
       }
 
       p.productPrice {
-        font-size: 1.1vw;
         font-weight: bold;
+      }
+    }
+  }
+
+  .category {
+    width: 80%;
+  }
+
+  aside {
+    width: 10rem;
+    overflow: hidden;
+
+
+    .priceBar {
+      width: 5rem;
+
+      input[type="checkbox"] {
+        display: none;
+      }
+
+      img {
+        margin-left: auto;
+        width: 1rem;
+      }
+
+      img[alt="arrow-down"] {
+        display: none;
+      }
+
+      .barTitle {
+        width: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      &:has(input[type="checkbox"]:checked) {
+        .extensionBar {
+          display: none;
+        }
+
+        img[alt="arrow-up"] {
+          display: none;
+        }
+
+        img[alt="arrow-down"] {
+          display: inline-block;
+        }
       }
     }
   }
@@ -66,7 +120,7 @@
 
 .ProductsPageDark {
   background-color: black;
-  color:white;
+  color: white;
 
   a {
     color: rgb(255, 255, 255);
