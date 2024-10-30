@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
 import { Product } from '../components/Product'
 import { NavLink } from 'react-router-dom'
-import './Cart.css'
+import './cart.css'
 
 function Cart() {
   const { AddToCart, clearCart, totalPrice, totalItems, productsIncart } = useContext(ProductContext)

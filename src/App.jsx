@@ -1,4 +1,4 @@
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes, Navigate} from "react-router-dom";
 import Homepage from "./Pages/Homepage";
 import ProductsPage from "./Pages/ProductsPage";
 import DetailsPages from "./Pages/DetailsPages";
@@ -7,6 +7,7 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import NotFound from "./Pages/NotFound";
 import './app.css'
 import Layout from "./Pages/Layout";
+import Category from "./components/Category";
 
 
 function App() {
