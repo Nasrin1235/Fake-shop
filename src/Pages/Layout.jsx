@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
   return (
     <div>
       <header className="header">
-        <a className="shop-name">Shop</a>
+        <a className="shop-name">OLN</a>
         <div className="header-icons">
           <button data-role="mode" onClick={modeSwitch} className={showMode}></button>
           <NavLink to="/checkout" className="icon">

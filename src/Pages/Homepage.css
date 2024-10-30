@@ -1,0 +1,75 @@
+
+.homepage {
+    width: 100%;
+    min-height: 100svh;
+    overflow: hidden;
+    background-color: #000000;
+  
+  
+  
+  .video-container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.206); 
+  }
+  
+  .shop-now-button {
+    padding: 10px 20px;
+    margin-bottom: 5rem;
+    font-size: 1.5rem;
+    color: #fff;
+    background-color: #3d0524b4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .shop-now-button:hover {
+    transform: scale(1.1);
+  }
+  
+  
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 20px;
+  }
+  
+  .category {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+  }
+}
