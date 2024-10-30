@@ -55,7 +55,7 @@ function DetailPages() {
         <h3>{result.title}</h3>
         <p className="description">{result.description}</p>
         <p className="category">{result.category}</p>
-        <span className="price">Price: {result.price} $</span>
+        <span className="price">Price: {result.price} €</span>
 
         <div className="rating">
           <div className="stars">{renderStars(rate)}</div>
