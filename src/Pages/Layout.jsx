@@ -8,7 +8,7 @@ import "./Header.css";
 import "./Footer.css";
 import { useContext } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 
 const Layout = ({ children }) => {
@@ -30,9 +30,9 @@ const Layout = ({ children }) => {
             <FontAwesomeIcon icon={faBasketShopping} />
             {totalItems > 0 && <span className="item-count">{totalItems}</span>}
           </NavLink>
-          <a>
+          <Link to="/search">
             <FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
-          </a>
+          </Link>
         </div>
       </header>
 
