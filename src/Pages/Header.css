@@ -48,15 +48,8 @@
   }
 }
 
-.headerDark {
-  background-color: rgb(59, 59, 59);
-  color: white;
-
-  button[data-role="mode"]{
-    background-color: black;
-  }
-
-  .icon {
-    color: white;
-  }
+.dark {
+  background-color: black;
+  color:white;
 }
+
