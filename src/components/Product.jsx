@@ -9,8 +9,10 @@ export function Product({ id }) {
   console.log(product)
   return (
     <li className="product">
-      <img src={product.image} alt={product.title} />
-      <div>
+      <div className='image'>
+        <img src={product.image} alt={product.title} />
+      </div>
+      <div className='description'>
         <h3>{product.title}</h3>
         <p className="info">{product.description}</p>
         <div>

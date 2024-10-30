@@ -75,16 +75,28 @@
     padding: 1rem;
     height: 15rem;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     gap: 10%;
     flex-wrap: nowrap;
 
-
-    img {
-      width: 20%;
+    .image {
+      width: 15rem;
       aspect-ratio: 3/4;
-      object-fit: contain;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+      }
+  
     }
+
+    .description {
+      
+    }
+
+
 
     .info {
       overflow: auto;
