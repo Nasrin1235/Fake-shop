@@ -13,15 +13,15 @@ import { NavLink } from "react-router-dom";
 
 const Layout = ({ children }) => {
   const {mode, modeSwitch} = useContext(ProductContext)
-  const showMode =  mode === 'lightMode' ? '' : 'dark'
+  const showMode =  mode === 'lightMode' ? 'header' : 'header headerDark'
 
   const { totalItems } = useContext(ProductContext);
   return (
     <div>
-      <header className="header">
+      <header className={showMode}>
         <a className="shop-name">Shop</a>
         <div className="header-icons">
-          <button data-role="mode" onClick={modeSwitch} className={showMode}></button>
+          <button data-role="mode" onClick={modeSwitch}></button>
           <NavLink to="/checkout" className="icon">
             <FontAwesomeIcon icon={faUser} className="icon" />
           </NavLink>

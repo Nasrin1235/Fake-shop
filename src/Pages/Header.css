@@ -12,6 +12,7 @@
     height: 2rem;
     border-radius: 50%;
     border: 4px solid black;
+    cursor: pointer;
 
     &:active {
       transform: scale(1.1);
@@ -47,7 +48,15 @@
   }
 }
 
-.dark {
-  background-color: black;
+.headerDark {
+  background-color: rgb(59, 59, 59);
   color: white;
+
+  button[data-role="mode"]{
+    background-color: black;
+  }
+
+  .icon {
+    color: white;
+  }
 }
