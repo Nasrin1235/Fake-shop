@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { api } from "../services/config";
 
+
 const ProductContext = createContext();
 
 function ProductsProvider({ children }) {
@@ -18,6 +19,8 @@ function ProductsProvider({ children }) {
 
   const totalItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
   const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0).toFixed(2)
+
+  
 
   useEffect(() => {
     const fetchProducts = async () => {
