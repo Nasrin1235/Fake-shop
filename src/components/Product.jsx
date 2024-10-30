@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
+import { NavLink } from "react-router-dom";
 
 export function Product({ id }) {
   const { productsIncart, deleteProduct, AddToCart } = useContext(ProductContext)
@@ -10,7 +11,9 @@ export function Product({ id }) {
   return (
     <li className="product">
       <div className='image'>
-        <img src={product.image} alt={product.title} />
+        <NavLink to={`/products/${id}`}>
+          <img src={product.image} alt={product.title} />
+        </NavLink>
       </div>
       <div className='description'>
         <h3>{product.title}</h3>
