@@ -14,7 +14,7 @@ export function Product({ id }) {
       </div>
       <div className='description'>
         <h3>{product.title}</h3>
-        <p className="info">{product.description}</p>
+        <p className="info" id='info'>{product.description}</p>
         <div>
           <button onClick={() => AddToCart(id, -1)}>-</button>
           <span>{product.quantity}</span>
@@ -22,7 +22,7 @@ export function Product({ id }) {
         </div>
       </div>
       <div className="priceColumn">
-        <p>{product.price} €</p>
+        <p id='price'>{product.price} €</p>
         <button data-role="delete" onClick={() => deleteProduct(id)}>Delete</button>
       </div>
     </li>

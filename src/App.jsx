@@ -5,6 +5,7 @@ import DetailsPages from "./Pages/DetailsPages";
 import Cart from "./Pages/Cart";
 import CheckoutPage from "./Pages/CheckoutPage";
 import NotFound from "./Pages/NotFound";
+import SearchPage from "./Pages/SearchPage";
 import './app.css'
 import Layout from "./Pages/Layout";
 import Category from "./components/Category";
@@ -22,6 +23,7 @@ function App() {
         <Route path="/products/:id" element={<DetailsPages />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

@@ -2,14 +2,15 @@ import { useContext } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
 import { Product } from '../components/Product'
 import { NavLink } from 'react-router-dom'
-import './cart.css'
+import './Cart.css'
 
 function Cart() {
-  const { AddToCart, clearCart, totalPrice, totalItems, productsIncart } = useContext(ProductContext)
+  const { AddToCart, clearCart, totalPrice, totalItems, productsIncart, mode } = useContext(ProductContext)
   const randomId = Math.floor(Math.random() * 20)
 
+  const cartPageMode = mode === 'lightMode' ? 'cartPage' : 'cartPage cartPageDark'
   return (
-    <div className='cartPage'>
+    <div className={cartPageMode}>
       <section>
         <button onClick={() => AddToCart(randomId)}>add one to cart</button><br />
         <h1>Shopping Basket</h1>

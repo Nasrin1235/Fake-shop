@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { ProductContext } from "../contex/ProductsContext";
-import { Product } from "../components/Product";
+
 import { NavLink } from "react-router-dom";
 import "./CheckoutPage.css";
 
@@ -212,6 +212,10 @@ function CheckoutPage() {
         <button type="submit" className="place-order">
           Place Order
         </button>
+
+        <NavLink to="/products" className="continue-shopping-btn">
+  Continue Shopping
+</NavLink>
       </form>
 
       {orderMessage && <div className="order-message">{orderMessage}</div>}
@@ -222,7 +226,13 @@ function CheckoutPage() {
             {productsIncart.length > 0 ? (
               productsIncart.map((product) => (
                 <li key={product.id}>
-                  <Product id={product.id} />
+                  <img src={product.image} alt={product.title} />
+                 <div>
+                    <h4>{product.title}</h4>
+                    
+                    <p><span>{product.quantity}</span>x €{product.price}</p>
+
+                    </div>
                 </li>
               ))
             ) : (
@@ -231,9 +241,7 @@ function CheckoutPage() {
           </ul>
           <p className="total">Total: €{calculateTotal()}</p>
         
-          <NavLink className="continue-shopping" to="/products">
-        Continue Shopping
-      </NavLink>
+     
          
         </section>
       </div>
