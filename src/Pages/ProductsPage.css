@@ -4,6 +4,7 @@
   padding: 2rem;
   color: black;
   display: flex;
+  gap:2rem;
   justify-content: center;
 
   * {
@@ -22,17 +23,24 @@
     text-underline-offset: 7px;
   }
 
-  nav ul {
-    display: flex;
-    list-style: none;
-    justify-content: center;
-    gap: 10%;
-  }
+  .category {
+    width: 80%;
+    border-left: 1px solid;
 
-  .notFound {
-    text-align: center;
-    margin: 5rem auto;
+    nav ul {
+        display: flex;
+        list-style: none;
+        flex-wrap: wrap;
+        max-width: 100%;
+        justify-content: space-around;
+
+        li {
+          margin-inline: 1rem;
+        }
+      }
   }
+  
+
 
   .productsInCategory {
     padding: 2rem;
@@ -70,26 +78,37 @@
     }
   }
 
-  .category {
-    width: 80%;
+  .notFound {
+    text-align: center;
+    margin: 5rem auto;
   }
 
   aside {
-    width: 10rem;
+    width: 12rem;
     overflow: hidden;
 
 
     .priceBar {
       width: 100%;
 
-      input {
-        width: 4rem;
-        padding:0.2rem;
+      input[type="text"] {
+        width: 100%;
+        padding-block:0.2rem;
+        padding-left: 1.2rem;
+        border: 0;
+        background-color: #EEEEEE;
+
+        &:focus {
+          outline:none;
+        }
+        
       }
 
       input[type="checkbox"] {
         display: none;
       }
+
+      
 
       img {
         margin-left: auto;
@@ -102,10 +121,29 @@
 
       .priceRange {
         display: flex;
-        padding: 0.2rem 0.5rem;
+        gap: 0.5rem;
 
         p {
           font-size: 0.9rem;
+        }
+
+        & > div {
+          border: 2px solid rgb(90, 90, 90);
+          border-radius: 0.5rem;
+          padding:0.2rem;
+        }
+
+        .show€ {
+          position: relative;
+
+          &::before {
+            content: "€";
+            position: absolute;
+            left: 5px; 
+            top: 50%;
+            transform: translateY(-50%);
+            color: gray;
+          }
         }
       }
 
@@ -114,6 +152,8 @@
         padding:0.25rem 0.5rem;
         display: flex;
         align-items: center;
+        margin-bottom: 0.5rem;
+        border-radius: 0.5rem;
 
         &:hover {
           background-color: rgb(192, 192, 192);

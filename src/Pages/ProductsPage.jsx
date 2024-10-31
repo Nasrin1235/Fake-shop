@@ -17,18 +17,22 @@ function ProductsPage() {
             <input type="checkbox" />
             <div className="barTitle">
               <span>Price</span>
-                <img src="/public/arrow-up.svg" alt="arrow-up" />
-                <img src="/public/arrow-down.svg" alt="arrow-down" />
+              <img src="/public/arrow-up.svg" alt="arrow-up" />
+              <img src="/public/arrow-down.svg" alt="arrow-down" />
             </div>
           </label>
           <div className="priceRange">
             <div>
               <p>From</p>
-              <input type="text" />€
+              <div className="show€">
+                <input type="text" />
+              </div>
             </div>
             <div>
               <p>To</p>
-              <input type="text" />€
+              <div className="show€">
+                <input type="text" />
+              </div>
             </div>
             {/* <div>pricebar</div> */}
           </div>
@@ -39,9 +43,7 @@ function ProductsPage() {
           <ul>
             {categoriesWithAll.map(
               category =>
-                <NavLink to={`category/${category}`} key={category}>
-                  <li><h3>{category}</h3></li>
-                </NavLink>
+                  <li><NavLink to={`category/${category}`} key={category}><h3>{category}</h3></NavLink></li>
             )}
           </ul>
         </nav>
