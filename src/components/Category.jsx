@@ -10,11 +10,13 @@ export default function Category() {
   const { category } = useParams()
 
   useEffect(() => {
-    calculatePriceRange(category);
-  }, [category]);
+    if (products.length > 0 && categories.length > 0) {
+      calculatePriceRange(category);
+    }
+  }, [category, products, categories]);
 
-  console.log('lowestPrice', lowestPrice)
-  console.log('hightestPrice', highestPrice)
+  // console.log('lowestPrice', lowestPrice)
+  // console.log('hightestPrice', highestPrice)
 
   if (category === 'all') {
     return (

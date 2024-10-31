@@ -65,17 +65,23 @@ function ProductsProvider({ children }) {
   const [highestPrice, setHighestPrice] = useState(null);
 
   function calculatePriceRange(category) {
+    let allPrices = []
+
     if (category === 'all') {
-      const allPrices = products.map(product => product.price);
-      setLowestPrice(Math.min(...allPrices));
-      setHighestPrice(Math.max(...allPrices));
+      allPrices = products.map(product => product.price);
     } else if (categories.includes(category)) {
       const productsInCategory = products.filter(
         product => product.category === category
       );
-      const allPrices = productsInCategory.map(product => product.price);
+      allPrices = productsInCategory.map(product => product.price);
+    }
+
+    if (allPrices.length > 0) {
       setLowestPrice(Math.min(...allPrices));
       setHighestPrice(Math.max(...allPrices));
+    } else {
+      setLowestPrice(0);
+      setHighestPrice(0);
     }
   };
 // adding function "modeSwitch", "deleteProduct"(in cart), "AddToCart", "clearCart"
