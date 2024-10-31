@@ -6,9 +6,12 @@ import './ProductsPage.css'
 
 
 function ProductsPage() {
-  const { products, categories, mode, lowestPrice, highestPrice } = useContext(ProductContext);
+  const { products, categories, mode, lowestPrice, highestPrice, givenLowestPrice, givenHighestPrice, setPriceRange} = useContext(ProductContext);
   const showMode = mode === 'lightMode' ? "ProductsPage" : "ProductsPage ProductsPageDark"
   const categoriesWithAll = ['all', ...categories]
+
+  console.log("givenLowestPrice", givenLowestPrice)
+
   return (
     <div className={showMode}>
       <aside>
@@ -25,13 +28,13 @@ function ProductsPage() {
             <div>
               <p>From</p>
               <div className="show€">
-                <input type="text" placeholder={lowestPrice}/>
+                <input type="text" name="lowestPrice" placeholder={lowestPrice} onChange={setPriceRange}/>
               </div>
             </div>
             <div>
               <p>To</p>
               <div className="show€">
-                <input type="text" placeholder={highestPrice}/>
+                <input type="text" name="highestPrice" placeholder={highestPrice} onChange={setPriceRange}/>
               </div>
             </div>
             {/* <div>pricebar</div> */}
