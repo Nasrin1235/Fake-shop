@@ -1,34 +1,20 @@
 
-import { useContext } from 'react'
+import { useContext,useEffect,useState } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
 import { ProductOfCaterory } from '../components/ProductOfCaterory'
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from "react";
 
 export default function Category() {
-  const { categories, products} = useContext(ProductContext)
+  const { categories, products, lowestPrice, highestPrice, calculatePriceRange } = useContext(ProductContext);
 
   const { category } = useParams()
-  const [lowestPrice, setLowestPrice] = useState(null)
-  const [hightestPrice, sethightestPrice] = useState(null)
 
   useEffect(() => {
-    if (category === 'all') {
-      const allPrices = products.map(product => product.price)
-      setLowestPrice(Math.min(...allPrices))
-      sethightestPrice(Math.max(...allPrices))
-    } else if (categories.includes(category)) {
-      const productsInCategory = products.filter(
-        product => product.category === category
-      )
-      const allPrices = productsInCategory.map(product => product.price)
-      setLowestPrice(Math.min(...allPrices))
-      sethightestPrice(Math.max(...allPrices))
-    }
-  }, [category])
+    calculatePriceRange(category);
+  }, [category]);
 
   console.log('lowestPrice', lowestPrice)
-  console.log('hightestPrice', hightestPrice)
+  console.log('hightestPrice', highestPrice)
 
   if (category === 'all') {
     return (

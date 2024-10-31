@@ -80,7 +80,12 @@
 
 
     .priceBar {
-      width: 5rem;
+      width: 100%;
+
+      input {
+        width: 4rem;
+        padding:0.2rem;
+      }
 
       input[type="checkbox"] {
         display: none;
@@ -95,14 +100,28 @@
         display: none;
       }
 
+      .priceRange {
+        display: flex;
+        padding: 0.2rem 0.5rem;
+
+        p {
+          font-size: 0.9rem;
+        }
+      }
+
       .barTitle {
         width: 100%;
+        padding:0.25rem 0.5rem;
         display: flex;
         align-items: center;
+
+        &:hover {
+          background-color: rgb(192, 192, 192);
+        }
       }
 
       &:has(input[type="checkbox"]:checked) {
-        .extensionBar {
+        .priceRange {
           display: none;
         }
 
