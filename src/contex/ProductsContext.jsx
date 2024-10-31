@@ -4,21 +4,9 @@ import { api } from "../services/config";
 const ProductContext = createContext();
 
 function ProductsProvider({ children }) {
+  // adding "products" and "categories"
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [lowestPrice, setLowestPrice] = useState(null);
-  const [highestPrice, setHighestPrice] = useState(null);
-  const [productsIncart, setProductsIncart] = useState(() => {
-    const savedCart = localStorage.getItem('productsIncart')
-    return savedCart ? JSON.parse(savedCart) : []
-  })
-  const [mode, setMode] = useState(() => {
-    const savedMode = localStorage.getItem('mode')
-    return savedMode ? JSON.parse(savedMode) : 'lightMode'
-  })
-
-  const totalItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
-  const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0).toFixed(2)
 
   const fetchData = async (endpoint, setState) => {
     try {
@@ -30,6 +18,27 @@ function ProductsProvider({ children }) {
     }
   };
 
+  useEffect(() => {
+    fetchData("/products", setProducts);
+    fetchData("/products/categories", setCategories);
+  }, []);
+
+  //adding "productsIncart" and "display-mode" and save them in localStorage on changing
+  const [productsIncart, setProductsIncart] = useState(() => {
+    const savedCart = localStorage.getItem('productsIncart')
+    return savedCart ? JSON.parse(savedCart) : []
+  })
+  const [mode, setMode] = useState(() => {
+    const savedMode = localStorage.getItem('mode')
+    return savedMode ? JSON.parse(savedMode) : 'lightMode'
+  })
+
+  useEffect(() => {
+    localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
+    localStorage.setItem('mode', JSON.stringify(mode));
+  }, [productsIncart, mode])
+
+  // adding localStorage listener to watch "productsIncart" and "mode" for real-time display
   const handleStorageChange = (event) => {
     if (event.key === 'productsIncart') {
       const updatedCart = JSON.parse(event.newValue);
@@ -41,21 +50,19 @@ function ProductsProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchData("/products", setProducts);
-    fetchData("/products/categories", setCategories);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('productsIncart', JSON.stringify(productsIncart));
-    localStorage.setItem('mode', JSON.stringify(mode));
-  }, [productsIncart, mode])
-
-  useEffect(() => {
     window.addEventListener('storage', handleStorageChange);
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
+
+// adding "totalItems" and "totalPrice"
+  const totalItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
+  const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0).toFixed(2)
+
+// adding "lowestPrice", "highestPrice" and function "calculatePriceRange"
+  const [lowestPrice, setLowestPrice] = useState(null);
+  const [highestPrice, setHighestPrice] = useState(null);
 
   function calculatePriceRange(category) {
     if (category === 'all') {
@@ -71,7 +78,7 @@ function ProductsProvider({ children }) {
       setHighestPrice(Math.max(...allPrices));
     }
   };
-
+// adding function "modeSwitch", "deleteProduct"(in cart), "AddToCart", "clearCart"
   function modeSwitch() {
     const newMode = mode === 'lightMode' ? 'darkMode' : 'lightMode'
     setMode(newMode)
