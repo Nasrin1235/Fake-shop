@@ -5,7 +5,7 @@ import { ProductOfCaterory } from '../components/ProductOfCaterory'
 import { useParams } from 'react-router-dom';
 
 export default function Category() {
-  const { categories, products, lowestPrice, highestPrice, calculatePriceRange } = useContext(ProductContext);
+  const { categories, products, calculatePriceRange, lowestPrice, highestPrice } = useContext(ProductContext);
 
   const { category } = useParams()
 
@@ -17,6 +17,7 @@ export default function Category() {
 
   // console.log('lowestPrice', lowestPrice)
   // console.log('hightestPrice', highestPrice)
+
 
   if (category === 'all') {
     return (

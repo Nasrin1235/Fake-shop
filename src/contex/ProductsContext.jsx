@@ -60,7 +60,7 @@ function ProductsProvider({ children }) {
   const totalItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
   const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0).toFixed(2)
 
-  // adding "lowestPrice", "highestPrice" and function "calculatePriceRange"
+  // adding "lowestPrice", "highestPrice" and function "calculatePriceRange", "setPriceRange"
   const [lowestPrice, setLowestPrice] = useState(null);
   const [highestPrice, setHighestPrice] = useState(null);
 
@@ -85,17 +85,13 @@ function ProductsProvider({ children }) {
     }
   };
 
-  // add param. "givenLowestPrice", "givenHighestPrice" and function "setPriceRange"
-  const [givenLowestPrice, setGivenLowestPrice] = useState(null)
-  const [givenHighestPrice, setGivenHighestPrice] = useState(null)
-
   function setPriceRange(e) {
     const { name, value } = e.target;
     if (name === "lowestPrice") {
-      setGivenLowestPrice(value);
+      setLowestPrice(value);
     }
     if (name === "highestPrice") {
-      setGivenHighestPrice(value);
+      setHighestPrice(value);
     }
   }
 
@@ -141,7 +137,7 @@ function ProductsProvider({ children }) {
   }
 
   return (
-    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, categories, lowestPrice, highestPrice, givenLowestPrice, givenHighestPrice, AddToCart, clearCart, deleteProduct, modeSwitch, calculatePriceRange, setPriceRange }}>
+    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, categories, lowestPrice, highestPrice, AddToCart, clearCart, deleteProduct, modeSwitch, calculatePriceRange, setPriceRange }}>
       {children}
     </ProductContext.Provider>
   );
