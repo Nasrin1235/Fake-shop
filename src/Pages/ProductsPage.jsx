@@ -6,11 +6,12 @@ import './ProductsPage.css'
 
 
 function ProductsPage() {
-  const { products, categories, mode, lowestPrice, highestPrice, givenLowestPrice, givenHighestPrice, setPriceRange} = useContext(ProductContext);
+  const { products, categories, mode, lowestPrice, highestPrice, setPriceRange} = useContext(ProductContext);
   const showMode = mode === 'lightMode' ? "ProductsPage" : "ProductsPage ProductsPageDark"
   const categoriesWithAll = ['all', ...categories]
 
-  console.log("givenLowestPrice", givenLowestPrice)
+  console.log("lowestPrice", lowestPrice)
+  console.log("highestPrice", highestPrice)
 
   return (
     <div className={showMode}>
