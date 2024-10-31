@@ -21,7 +21,7 @@ function ProductsPage() {
                 <img src="/public/arrow-down.svg" alt="arrow-down" />
             </div>
           </label>
-          <div className="extensionBar">
+          <div className="priceRange">
             <div>
               <p>From</p>
               <input type="text" />€
@@ -30,7 +30,7 @@ function ProductsPage() {
               <p>To</p>
               <input type="text" />€
             </div>
-            <div>pricebar</div>
+            {/* <div>pricebar</div> */}
           </div>
         </div>
       </aside>
