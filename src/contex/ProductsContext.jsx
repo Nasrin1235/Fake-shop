@@ -56,11 +56,11 @@ function ProductsProvider({ children }) {
     };
   }, []);
 
-// adding "totalItems" and "totalPrice"
+  // adding "totalItems" and "totalPrice"
   const totalItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
   const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0).toFixed(2)
 
-// adding "lowestPrice", "highestPrice" and function "calculatePriceRange"
+  // adding "lowestPrice", "highestPrice" and function "calculatePriceRange"
   const [lowestPrice, setLowestPrice] = useState(null);
   const [highestPrice, setHighestPrice] = useState(null);
 
@@ -84,7 +84,22 @@ function ProductsProvider({ children }) {
       setHighestPrice(0);
     }
   };
-// adding function "modeSwitch", "deleteProduct"(in cart), "AddToCart", "clearCart"
+
+  // add param. "givenLowestPrice", "givenHighestPrice" and function "setPriceRange"
+  const [givenLowestPrice, setGivenLowestPrice] = useState(null)
+  const [givenHighestPrice, setGivenHighestPrice] = useState(null)
+
+  function setPriceRange(e) {
+    const { name, value } = e.target;
+    if (name === "lowestPrice") {
+      setGivenLowestPrice(value);
+    }
+    if (name === "highestPrice") {
+      setGivenHighestPrice(value);
+    }
+  }
+
+  // adding function "modeSwitch", "deleteProduct"(in cart), "AddToCart", "clearCart"
   function modeSwitch() {
     const newMode = mode === 'lightMode' ? 'darkMode' : 'lightMode'
     setMode(newMode)
@@ -126,7 +141,7 @@ function ProductsProvider({ children }) {
   }
 
   return (
-    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, categories, lowestPrice, highestPrice, AddToCart, clearCart, deleteProduct, modeSwitch, calculatePriceRange }}>
+    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, categories, lowestPrice, highestPrice, givenLowestPrice, givenHighestPrice, AddToCart, clearCart, deleteProduct, modeSwitch, calculatePriceRange, setPriceRange }}>
       {children}
     </ProductContext.Provider>
   );
