@@ -6,7 +6,7 @@ import './ProductsPage.css'
 
 
 function ProductsPage() {
-  const { products, categories, mode } = useContext(ProductContext);
+  const { products, categories, mode, lowestPrice, highestPrice } = useContext(ProductContext);
   const showMode = mode === 'lightMode' ? "ProductsPage" : "ProductsPage ProductsPageDark"
   const categoriesWithAll = ['all', ...categories]
   return (
@@ -25,13 +25,13 @@ function ProductsPage() {
             <div>
               <p>From</p>
               <div className="show€">
-                <input type="text" />
+                <input type="text" placeholder={lowestPrice}/>
               </div>
             </div>
             <div>
               <p>To</p>
               <div className="show€">
-                <input type="text" />
+                <input type="text" placeholder={highestPrice}/>
               </div>
             </div>
             {/* <div>pricebar</div> */}
@@ -43,7 +43,7 @@ function ProductsPage() {
           <ul>
             {categoriesWithAll.map(
               category =>
-                  <li><NavLink to={`category/${category}`} key={category}><h3>{category}</h3></NavLink></li>
+                  <li key={category}><NavLink to={`category/${category}`} ><h3>{category}</h3></NavLink></li>
             )}
           </ul>
         </nav>
