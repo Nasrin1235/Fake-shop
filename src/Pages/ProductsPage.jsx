@@ -1,17 +1,26 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { ProductContext } from "../contex/ProductsContext";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useLocation} from "react-router-dom";
 import './ProductsPage.css'
 
 
 
+
 function ProductsPage() {
-  const { products, categories, mode, lowestPrice, highestPrice, setPriceRange} = useContext(ProductContext);
+  const { categories, mode, lowestPrice, highestPrice, setPriceRange} = useContext(ProductContext);
+  const location = useLocation();
   const showMode = mode === 'lightMode' ? "ProductsPage" : "ProductsPage ProductsPageDark"
   const categoriesWithAll = ['all', ...categories]
+  const lowestPriceRef = useRef(null)
+  const highestPriceRef = useRef(null)
 
-  console.log("lowestPrice", lowestPrice)
-  console.log("highestPrice", highestPrice)
+  console.log("Current path:", location.pathname);
+
+  useEffect(() => {
+    lowestPriceRef.current.value = '';  
+    highestPriceRef.current.value = '';
+  }, [location.pathname]);
+ 
 
   return (
     <div className={showMode}>
@@ -19,7 +28,7 @@ function ProductsPage() {
         <div className="priceBar">
           <label>
             <input type="checkbox" />
-            <div className="barTitle">
+            <div id="barTitle" className="barTitle">
               <span>Price</span>
               <img src="/public/arrow-up.svg" alt="arrow-up" />
               <img src="/public/arrow-down.svg" alt="arrow-down" />
@@ -29,13 +38,13 @@ function ProductsPage() {
             <div>
               <p>From</p>
               <div className="show€">
-                <input type="text" name="lowestPrice" placeholder={lowestPrice} onChange={setPriceRange}/>
+                <input id="lowestPrice" type="text" ref={lowestPriceRef} name="lowestPrice" placeholder={lowestPrice} onChange={setPriceRange}/>
               </div>
             </div>
             <div>
               <p>To</p>
               <div className="show€">
-                <input type="text" name="highestPrice" placeholder={highestPrice} onChange={setPriceRange}/>
+                <input id="highestPrice" type="text" ref={highestPriceRef} name="highestPrice" placeholder={highestPrice} onChange={setPriceRange}/>
               </div>
             </div>
             {/* <div>pricebar</div> */}
