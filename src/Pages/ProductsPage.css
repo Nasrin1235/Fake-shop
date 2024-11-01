@@ -190,6 +190,10 @@
           border: 3px solid #000000;
           cursor: pointer;
         }
+
+        .maxInput {
+          /* transform: translateY(-1rem); */
+        }
       }
 
       &:has(input[type="checkbox"]:checked) {
