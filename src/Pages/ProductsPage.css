@@ -93,7 +93,7 @@
     overflow: hidden;
 
 
-    .priceBar {
+    .priceBlock {
       width: 100%;
 
       input[type="text"] {
@@ -154,13 +154,17 @@
         }
       }
 
+      .priceBar {
+        margin-block: 1rem;
+      }
+
       input[type="range"] {
         -webkit-appearance: none;
         appearance: none;
         width: 100%;
-        height: 10px;
+        height: 8px;
         background: #ff0000;
-        border-radius: 5px;
+        border-radius: 4px;
         outline: none;
       }
 
@@ -171,7 +175,7 @@
         height: 20px;
         border-radius: 50%;
         background: #ffffff;
-        border: 2px solid #ff0000;
+        border: 3px solid #000000;
         cursor: pointer;
       }
 
@@ -190,6 +194,10 @@
 
       &:has(input[type="checkbox"]:checked) {
         .priceRange {
+          display: none;
+        }
+
+        .priceBar {
           display: none;
         }
 
