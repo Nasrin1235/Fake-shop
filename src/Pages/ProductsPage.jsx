@@ -9,7 +9,6 @@ function ProductsPage() {
   const showMode = mode === 'lightMode' ? "ProductsPage" : "ProductsPage ProductsPageDark"
   const categoriesWithAll = ['all', ...categories]
 
-  const [sliderValue, setSliderValue] = useState(50);
 
   useEffect(() => {
     resetGivenPrice()
@@ -66,7 +65,7 @@ function ProductsPage() {
           <div className="priceBar">
             <input
               type="range"
-              min={lowestPrice}
+              min={Math.floor(lowestPrice)}
               max={highestPrice}
               value={givenLowestPrice || lowestPrice}
               onChange={changeGivenLowestPrice}
@@ -75,9 +74,10 @@ function ProductsPage() {
             <input
               type="range"
               min={lowestPrice}
-              max={highestPrice}
+              max={Math.ceil(highestPrice)}
               value={givenHighestPrice || highestPrice}
               onChange={changeGivenHighestPrice}
+              className="maxInput"
             />
           </div>
         </div>
