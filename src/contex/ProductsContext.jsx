@@ -146,7 +146,7 @@ function ProductsProvider({ children }) {
   }
 
   return (
-    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, categories, lowestPrice, highestPrice, givenLowestPrice, givenHighestPrice, AddToCart, clearCart, deleteProduct, modeSwitch, calculatePriceRange, setPriceRange, resetGivenPrice, setGivenLowestPrice}}>
+    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, categories, lowestPrice, highestPrice, givenLowestPrice, givenHighestPrice, AddToCart, clearCart, deleteProduct, modeSwitch, calculatePriceRange, setPriceRange, resetGivenPrice, setGivenLowestPrice, setGivenHighestPrice}}>
       {children}
     </ProductContext.Provider>
   );
