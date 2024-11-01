@@ -60,7 +60,7 @@ function ProductsProvider({ children }) {
   const totalItems = productsIncart.reduce((acc, product) => acc + product.quantity, 0)
   const totalPrice = productsIncart.reduce((acc, product) => acc + product.quantity * product.price, 0).toFixed(2)
 
-  // adding "lowestPrice", "highestPrice" and function "calculatePriceRange", "setPriceRange"
+  // adding "lowestPrice", "highestPrice" and function "calculatePriceRange"
   const [lowestPrice, setLowestPrice] = useState(null);
   const [highestPrice, setHighestPrice] = useState(null);
 
@@ -85,14 +85,23 @@ function ProductsProvider({ children }) {
     }
   };
 
+  // adding "givenLowestPrice", "givenHighestPrice", function "setPriceRange", "resetGivenPrice"
+  const [givenLowestPrice, setGivenLowestPrice] = useState('');
+  const [givenHighestPrice, setGivenHighestPrice] = useState('');
+
   function setPriceRange(e) {
     const { name, value } = e.target;
-    if (name === "lowestPrice") {
-      setLowestPrice(value);
+    if (name === "givenLowestPrice") {
+      setGivenLowestPrice(value);
     }
-    if (name === "highestPrice") {
-      setHighestPrice(value);
+    if (name === "givenHighestPrice") {
+      setGivenHighestPrice(value);
     }
+  }
+
+  function resetGivenPrice() {
+    setGivenLowestPrice('')
+    setGivenHighestPrice('')
   }
 
   // adding function "modeSwitch", "deleteProduct"(in cart), "AddToCart", "clearCart"
@@ -137,7 +146,7 @@ function ProductsProvider({ children }) {
   }
 
   return (
-    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, categories, lowestPrice, highestPrice, AddToCart, clearCart, deleteProduct, modeSwitch, calculatePriceRange, setPriceRange }}>
+    <ProductContext.Provider value={{ products, productsIncart, totalItems, totalPrice, mode, categories, lowestPrice, highestPrice, givenLowestPrice, givenHighestPrice, AddToCart, clearCart, deleteProduct, modeSwitch, calculatePriceRange, setPriceRange, resetGivenPrice }}>
       {children}
     </ProductContext.Provider>
   );
