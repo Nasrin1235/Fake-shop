@@ -1,25 +1,29 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../contex/ProductsContext";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import './ProductsPage.css'
 
 function ProductsPage() {
-  const { categories, mode, lowestPrice, highestPrice, givenLowestPrice, givenHighestPrice, setPriceRange, resetGivenPrice } = useContext(ProductContext);
+  const { categories, mode, lowestPrice, highestPrice, givenLowestPrice, givenHighestPrice, setPriceRange, resetGivenPrice, setGivenLowestPrice } = useContext(ProductContext);
   const location = useLocation();
   const showMode = mode === 'lightMode' ? "ProductsPage" : "ProductsPage ProductsPageDark"
   const categoriesWithAll = ['all', ...categories]
 
-  console.log("Current path:", location.pathname);
+  const [sliderValue, setSliderValue] = useState(50);
 
   useEffect(() => {
     resetGivenPrice()
   }, [location.pathname]);
 
+  function handleSliderChange(e) {
+    setGivenLowestPrice(e.target.value); 
+  };
+
 
   return (
     <div className={showMode}>
       <aside>
-        <div className="priceBar">
+        <div className="priceBlock">
           <label>
             <input type="checkbox" />
             <div id="barTitle" className="barTitle">
@@ -36,7 +40,7 @@ function ProductsPage() {
                   id="givenLowestPrice"
                   type="text"
                   name="givenLowestPrice"
-                  value={givenLowestPrice || ''} 
+                  value={givenLowestPrice || ''}
                   placeholder={lowestPrice}
                   onChange={setPriceRange}
                 />
@@ -45,19 +49,26 @@ function ProductsPage() {
             <div>
               <p>To</p>
               <div className="show€">
-              <input
+                <input
                   id="givenHighestPrice"
                   type="text"
                   name="givenHighestPrice"
-                  value={givenHighestPrice || ''} 
+                  value={givenHighestPrice || ''}
                   placeholder={highestPrice}
                   onChange={setPriceRange}
                 />
               </div>
             </div>
           </div>
-          <div>
-            <input type="range" id="myRange" min="0" max="200" value="50" />
+          <div className="priceBar">
+            <input
+              type="range"
+              id="myRange"
+              min={lowestPrice}
+              max={highestPrice}
+              value={givenLowestPrice || lowestPrice}
+              onChange={handleSliderChange}
+            />
           </div>
         </div>
       </aside>
