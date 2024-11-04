@@ -24,7 +24,6 @@ const LoginPage = () => {
       setIsLoggedIn(true);
       localStorage.setItem("isLoggedIn", "true");
       navigate("/");
-      navigate("/");
     } else {
       setError("Incorrect user name or password");
     }
