@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
         </Link>
         <div className="header-icons">
           <button data-role="mode" onClick={modeSwitch} className={showMode}></button>
-          <NavLink to="/checkout" className="icon">
+          <NavLink to="/login" className="icon">
             <FontAwesomeIcon icon={faUser} className="icon" />
           </NavLink>
 
