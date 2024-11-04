@@ -19,7 +19,9 @@ const Layout = ({ children }) => {
   return (
     <div>
       <header className="header">
-        <a className="shop-name">OLN</a>
+        <Link to="/" className="logo">
+          <img src="./Logo.png" alt="Logo" />
+        </Link>
         <div className="header-icons">
           <button data-role="mode" onClick={modeSwitch} className={showMode}></button>
           <NavLink to="/login" className="icon">

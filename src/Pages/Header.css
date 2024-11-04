@@ -7,6 +7,10 @@
   color: rgb(0, 0, 0);
   border-bottom: 1px solid black;
 
+  img {
+    width: 7rem;
+  }
+
   button[data-role="mode"] {
     width: 2rem;
     height: 2rem;
