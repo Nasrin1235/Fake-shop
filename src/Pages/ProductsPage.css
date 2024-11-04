@@ -1,8 +1,17 @@
 .ProductsPage {
   min-height: 100svh;
   background-color: rgb(238, 238, 238);
-  padding:2rem;
+  padding: 2rem;
   color: black;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
   a {
     text-decoration: none;
@@ -10,24 +19,32 @@
   }
 
   .active {
-    text-decoration:underline;
-    text-underline-offset: 7px; 
+    text-decoration: underline;
+    text-underline-offset: 7px;
   }
 
-  nav ul {
-    display: flex;
-    list-style: none;
-    justify-content: space-around;
+  .category {
+    width: 80%;
+    border-left: 1px solid;
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      flex-wrap: wrap;
+      max-width: 100%;
+      justify-content: space-around;
+
+      li {
+        margin-inline: 1rem;
+      }
+    }
   }
 
-  .notFound {
-    text-align: center;
-    margin: 5rem auto;
-  }
+
 
   .productsInCategory {
-    padding:2rem;
-    gap:2rem;
+    padding: 2rem;
+    gap: 5%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -35,10 +52,15 @@
 
     li {
       margin-block: 1rem;
-      width: 20%;
-      aspect-ratio: 4/7;
+      width: 10rem;
+      aspect-ratio: 1/2;
       overflow: hidden;
       background-color: rgb(225, 225, 225);
+
+      &:hover {
+        transform: translate(-5px, -5px);
+        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.7);
+      }
 
       img {
         width: 100%;
@@ -47,18 +69,145 @@
       }
 
       p {
-        padding:0.5rem 1rem;
+        padding: 0.5rem 1rem;
       }
 
       p.productTitle {
-        height: 4vw;
-        font-size: 1.1vw;
+        height: 3.5rem;
         overflow: hidden;
       }
 
       p.productPrice {
-        font-size: 1.1vw;
         font-weight: bold;
+      }
+    }
+  }
+
+  .notFound {
+    text-align: center;
+    margin: 5rem auto;
+  }
+
+  aside {
+    width: 12rem;
+    overflow: hidden;
+
+
+    .priceBlock {
+      width: 100%;
+
+      input[type="text"] {
+        width: 100%;
+        padding-block: 0.2rem;
+        padding-left: 1.2rem;
+        border: 0;
+        background-color: #EEEEEE;
+
+        &:focus {
+          outline: none;
+        }
+
+      }
+
+      input[type="checkbox"] {
+        display: none;
+      }
+
+
+
+      img {
+        margin-left: auto;
+        width: 1rem;
+      }
+
+      img[alt="arrow-down"] {
+        display: none;
+      }
+
+      .priceRange {
+        display: flex;
+        gap: 0.5rem;
+
+        p {
+          font-size: 0.9rem;
+        }
+
+        &>div {
+          border: 2px solid rgb(90, 90, 90);
+          border-radius: 0.5rem;
+          padding: 0.2rem;
+        }
+
+
+
+        .show€ {
+          position: relative;
+
+          &::before {
+            content: "€";
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: gray;
+          }
+        }
+      }
+
+      .barTitle {
+        width: 100%;
+        padding: 0.25rem 0.5rem;
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        border-radius: 0.5rem;
+
+        &:hover {
+          background-color: rgb(192, 192, 192);
+        }
+      }
+
+      .priceBar {
+        margin-block: 1rem;
+
+        input[type="range"] {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 100%;
+          height: 8px;
+          background: #ff0000;
+          border-radius: 4px;
+          outline: none;
+        }
+  
+        input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #ffffff;
+          border: 3px solid #000000;
+          cursor: pointer;
+        }
+      }
+
+      &:has(input[type="checkbox"]:checked) {
+        .priceRange {
+          display: none;
+        }
+
+        .priceBar {
+          display: none;
+        }
+
+        img[alt="arrow-up"] {
+          display: none;
+        }
+
+        img[alt="arrow-down"] {
+          display: inline-block;
+        }
       }
     }
   }
@@ -66,7 +215,7 @@
 
 .ProductsPageDark {
   background-color: black;
-  color:white;
+  color: white;
 
   a {
     color: rgb(255, 255, 255);
@@ -76,5 +225,15 @@
     li {
       background-color: rgb(54, 54, 54);
     }
+  }
+
+  #barTitle {
+    background-color: rgb(111, 111, 111);
+  }
+
+  #givenLowestPrice,
+  #givenHighestPrice {
+    background-color: black;
+    color: white;
   }
 }
