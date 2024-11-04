@@ -31,28 +31,43 @@ function Homepage() {
           style={{ backgroundImage: "url('woman.jpg')" }}
           onClick={() => handleCategoryClick("women's clothing")}
         >
-          women
+          <span>women</span>
+          <video className="hover-video" autoPlay muted loop>
+            <source src="WB.mp4" type="video/mp4" />
+          </video>
         </div>
         <div
           className="category"
           style={{ backgroundImage: "url('man.jpg')" }}
           onClick={() => handleCategoryClick("men's clothing")}
         >
-          Men
+          
+          <span>Men</span>
+          <video className="hover-video" autoPlay muted loop>
+            <source src="MB.mp4" type="video/mp4" />
+          </video>
         </div>
         <div
           className="category"
           style={{ backgroundImage: "url('digital.jpg')" }}
           onClick={() => handleCategoryClick("electronics")}
         >
-          Electronics
+          
+          <span>Electronics</span>
+          <video className="hover-video" autoPlay muted loop>
+            <source src="DB.mp4" type="video/mp4" />
+          </video>
         </div>
         <div
           className="category"
           style={{ backgroundImage: "url('jew.jpg')" }}
           onClick={() => handleCategoryClick("jewelery")}
         >
-          Jewelery
+          
+          <span>Jewelery</span>
+          <video className="hover-video" autoPlay muted loop>
+            <source src="JB.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
     </div>
