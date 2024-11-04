@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
         <a className="shop-name">OLN</a>
         <div className="header-icons">
           <button data-role="mode" onClick={modeSwitch} className={showMode}></button>
-          <NavLink to="/checkout" className="icon">
+          <NavLink to="/login" className="icon">
             <FontAwesomeIcon icon={faUser} className="icon" />
           </NavLink>
 

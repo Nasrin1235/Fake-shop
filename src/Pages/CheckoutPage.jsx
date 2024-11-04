@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect } from "react";
 import { ProductContext } from "../contex/ProductsContext";
-
 import { NavLink } from "react-router-dom";
 import "./CheckoutPage.css";
 
@@ -36,14 +35,6 @@ function CheckoutPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const orderDetails = {
-      ...formData,
-      items: productsIncart,
-      total: calculateTotal(),
-    };
-
-    console.log("Order Details:", orderDetails);
 
     clearCart();
     setFormData(initialFormData);
@@ -214,8 +205,8 @@ function CheckoutPage() {
         </button>
 
         <NavLink to="/products" className="continue-shopping-btn">
-  Continue Shopping
-</NavLink>
+          Continue Shopping
+        </NavLink>
       </form>
 
       {orderMessage && <div className="order-message">{orderMessage}</div>}
@@ -227,12 +218,13 @@ function CheckoutPage() {
               productsIncart.map((product) => (
                 <li key={product.id}>
                   <img src={product.image} alt={product.title} />
-                 <div>
+                  <div>
                     <h4>{product.title}</h4>
-                    
-                    <p><span>{product.quantity}</span>x €{product.price}</p>
 
-                    </div>
+                    <p>
+                      <span>{product.quantity}</span>x €{product.price}
+                    </p>
+                  </div>
                 </li>
               ))
             ) : (
@@ -240,9 +232,6 @@ function CheckoutPage() {
             )}
           </ul>
           <p className="total">Total: €{calculateTotal()}</p>
-        
-     
-         
         </section>
       </div>
     </div>
