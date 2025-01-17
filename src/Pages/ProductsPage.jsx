@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { ProductContext } from "../contex/ProductsContext";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import './ProductsPage.css'
 
 function ProductsPage() {
   const { categories, mode, lowestPrice, highestPrice, givenLowestPrice, givenHighestPrice, setPriceRange, resetGivenPrice, setGivenLowestPrice,setGivenHighestPrice } = useContext(ProductContext);
+  
   const location = useLocation();
   const showMode = mode === 'lightMode' ? "ProductsPage" : "ProductsPage ProductsPageDark"
   const categoriesWithAll = ['all', ...categories]
