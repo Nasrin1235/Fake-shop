@@ -12,7 +12,9 @@ function ProductsProvider({ children }) {
     try {
       const response = await api.get(endpoint);
       console.log(`Fetched data from ${endpoint}:`, response);
+      
       setState(response);
+
     } catch (error) {
       console.error(`Error fetching data from ${endpoint}:`, error.message);
     }

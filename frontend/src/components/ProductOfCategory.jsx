@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
 import { NavLink } from "react-router-dom";
 
-export function ProductOfCaterory({ id }) {
+export function ProductOfCategory({ id }) {
   const { products } = useContext(ProductContext)
   const product = products.find(product => product.id === id)
   return (

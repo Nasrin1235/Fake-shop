@@ -1,7 +1,7 @@
 
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
-import { ProductOfCaterory } from './ProductOfCaterory'
+import { ProductOfCategory } from './ProductOfCategory'
 import { useParams } from 'react-router-dom';
 
 export default function Category() {
@@ -28,7 +28,7 @@ export default function Category() {
       return (
         <ul className='productsInCategory'>
           {filteredProducts.map(
-            product => <ProductOfCaterory
+            product => <ProductOfCategory
               key={product.id}
               id={product.id}
             />
@@ -46,7 +46,7 @@ export default function Category() {
       return (
         <ul className='productsInCategory'>
           {filteredProducts.map(
-            product => <ProductOfCaterory
+            product => <ProductOfCategory
               key={product.id}
               id={product.id}
             />
