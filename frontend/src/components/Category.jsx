@@ -1,7 +1,7 @@
 
 import { useContext, useEffect, useState } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
-import { ProductOfCaterory } from '../components/ProductOfCaterory'
+import { ProductOfCaterory } from './ProductOfCaterory'
 import { useParams } from 'react-router-dom';
 
 export default function Category() {
