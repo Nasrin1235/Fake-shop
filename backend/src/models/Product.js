@@ -36,6 +36,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  stockQuantity: {
+    type: Number,
+    required: true,
+  },
 })
 
 export const Product = mongoose.model('Product', productSchema)

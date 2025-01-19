@@ -5,8 +5,13 @@ import mongoose from "mongoose";
 
 async function productInitialization() {
   try {
-    const products = await api.get("/products");
     dbConnection()
+    const products = (await api.get("/products")).map(product => {
+      product.stockQuantity = 5
+      return product
+    });
+    await Product.deleteMany()
+    await Product.insertMany(products)
     await mongoose.disconnect()
     console.log(`
 Products initialized!
