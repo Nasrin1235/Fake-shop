@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 
 const ProductContext = createContext();
+const productRoute = 'http://localhost:3001/products'
 
 function ProductsProvider({ children }) {
   // adding "products" and "categories"
@@ -16,7 +17,6 @@ function ProductsProvider({ children }) {
       }
 
       const data = await response.json();
-      console.log(`Fetched data from ${endpoint}:`, data);
 
       setState(data);
     } catch (error) {
@@ -121,20 +121,61 @@ function ProductsProvider({ children }) {
     setMode(newMode);
   }
 
-  function deleteProduct(id) {
+  async function deleteProduct(id) {
+    const product = productsIncart.find(product => product.id === id)
+    if (product) {
+      const quantityToAdd = product.quantity
+      const response = await fetch(`${productRoute}/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          quantityToAdd,
+        })
+      })
+
+      if (!response.ok) {
+        console.error("Failed to update product stock");
+        return;
+      }
+      const data = await response.json()
+      const updatedProduct = data.product
+      setStockQuantity(updatedProduct.stockQuantity)
+    }
     const newCart = productsIncart.filter((product) => product.id !== id);
+    
     setProductsIncart(newCart);
   }
 
+
+  const [stockQuantity, setStockQuantity] = useState(null);
   async function AddToCart(id, Increment = 1) {
-    let productToUpdate = {}
+    
+    let newProduct = {}
+    let productStockQuantity
+    let product
+    
+    try {
+      const response = await fetch(`${productRoute}/${id}`)
+      product = await response.json()
+    } catch(error) {
+      console.error('Error fetching stockQuantity', error.message)
+      return
+    }
+
+    productStockQuantity = product.stockQuantity - Increment
+    setStockQuantity(productStockQuantity)
+
+    if (Increment > 0 && productStockQuantity <= 0) {
+      return alert("No more stocks!"); 
+    }
+
     setProductsIncart((preCart) => {
       const existingProduct = preCart.find((product) => product.id === id);
       if (existingProduct) {
         console.log('existingProduct comes in cart')
-        productToUpdate = existingProduct
-        if (Increment > 0 && existingProduct.stockQuantity === 0)
-          return alert("No more stocks!")
+        console.log('productToUpdate.stockQuantity is:', existingProduct.stockQuantity)
 
         if (existingProduct.quantity + Increment > 0)
           return preCart.map((product) =>
@@ -145,27 +186,27 @@ function ProductsProvider({ children }) {
         else return preCart.filter((product) => product.id !== id);
       }
 
-      const newProduct = products.find((product) => product.id === id);
+      newProduct = products.find((product) => product.id === id);
+      newProduct.quantity = 1
       if (newProduct) {
         console.log('new product comes in cart')
-        productToUpdate = newProduct
-        return [{ ...newProduct, quantity: 1 }, ...preCart];
+        return [newProduct, ...preCart];
       }
       return preCart;
     });
-    console.log(productsIncart);
 
     try {
+      const productToUpdate = productsIncart.find((product) => product.id === id) || newProduct;
       console.log('productToUpdate is:', productToUpdate)
       if (productToUpdate) {
-        await fetch(`http://localhost:3001/products/update-stock`, {
+        await fetch(`${productRoute}/update-stock`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            id: productToUpdate.id,
-            Increment
+            Increment,
+            productToUpdate
           }),
         });
         console.log(`Stock updated for product ${id}`);
@@ -193,6 +234,8 @@ function ProductsProvider({ children }) {
         highestPrice,
         givenLowestPrice,
         givenHighestPrice,
+        stockQuantity,
+        setStockQuantity,
         AddToCart,
         clearCart,
         deleteProduct,

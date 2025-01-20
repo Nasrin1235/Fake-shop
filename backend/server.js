@@ -11,7 +11,7 @@ import productRouter from "./src/routes/productRouter.js";
 
 const app = express();
 app.use(express.json());
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 3001;
 const _fileName = fileURLToPath(import.meta.url);
 const _path = path.dirname(_fileName);
 const frontendDistPath = path.join(_path, "../frontend/dist");

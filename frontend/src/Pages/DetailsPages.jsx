@@ -6,16 +6,26 @@ import "./DetailsPage.css";
 
 function DetailPages() {
   const { id } = useParams();
-  const { products, AddToCart, productsIncart } = useContext(ProductContext);
+  const { AddToCart, stockQuantity, setStockQuantity} = useContext(ProductContext);
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const result = products.find((product) => product.id === Number(id));
-    setProduct(result);
-  }, [products, id]); 
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/products/${id}`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch product: ${response.status}`);
+        }
+        const result = await response.json();
+        setProduct(result);
+        setStockQuantity(result.stockQuantity); 
+      } catch (error) {
+        console.error("Error fetching product:", error.message);
+      }
+    };
 
-  const stockQuantity = product?.stockQuantity
-  console.log("productsIncart:", productsIncart);
+    fetchProduct();
+  }, [id, setStockQuantity]);
 
   if (!product) return <h1>Product not found</h1>;
 
@@ -86,7 +96,8 @@ function DetailPages() {
         <a
           onClick={() => {
             AddToCart(product.id);
-            console.log("Added to cart:", product.title); // Console log test
+            console.log("Added to cart:", product.title); 
+            // window.location.reload();
             // window.location.href = "/cart";
           }}
         >
