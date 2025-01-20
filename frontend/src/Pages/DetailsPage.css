@@ -86,4 +86,13 @@
     border-radius: 4px;
     transition: background-color 0.2s;
   }
+
+  .stockQuantity {
+    padding: 8px;
+
+    span:first-child {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  }
 }

@@ -126,10 +126,16 @@ function ProductsProvider({ children }) {
     setProductsIncart(newCart);
   }
 
-  function AddToCart(id, Increment = 1) {
+  async function AddToCart(id, Increment = 1) {
+    let productToUpdate = {}
     setProductsIncart((preCart) => {
       const existingProduct = preCart.find((product) => product.id === id);
       if (existingProduct) {
+        console.log('existingProduct comes in cart')
+        productToUpdate = existingProduct
+        if (Increment > 0 && existingProduct.stockQuantity === 0)
+          return alert("No more stocks!")
+
         if (existingProduct.quantity + Increment > 0)
           return preCart.map((product) =>
             product.id === id
@@ -141,11 +147,32 @@ function ProductsProvider({ children }) {
 
       const newProduct = products.find((product) => product.id === id);
       if (newProduct) {
+        console.log('new product comes in cart')
+        productToUpdate = newProduct
         return [{ ...newProduct, quantity: 1 }, ...preCart];
       }
       return preCart;
     });
     console.log(productsIncart);
+
+    try {
+      console.log('productToUpdate is:', productToUpdate)
+      if (productToUpdate) {
+        await fetch(`http://localhost:3001/products/update-stock`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: productToUpdate.id,
+            Increment
+          }),
+        });
+        console.log(`Stock updated for product ${id}`);
+      }
+    } catch (error) {
+      console.error("Error updating stock:", error.message);
+    }
   }
 
   function clearCart() {

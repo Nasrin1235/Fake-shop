@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../contex/ProductsContext";
 import { Link } from "react-router-dom";
 import "./DetailsPage.css";
@@ -7,14 +7,19 @@ import "./DetailsPage.css";
 function DetailPages() {
   const { id } = useParams();
   const { products, AddToCart, productsIncart } = useContext(ProductContext);
-  const result = products.find((product) => product.id === Number(id));
-  console.log("result:", result);
-  // AddToCard(1)
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const result = products.find((product) => product.id === Number(id));
+    setProduct(result);
+  }, [products, id]); 
+
+  const stockQuantity = product?.stockQuantity
   console.log("productsIncart:", productsIncart);
 
-  if (!result) return <h1>Product not found</h1>;
+  if (!product) return <h1>Product not found</h1>;
 
-  const { rate, count } = result.rating;
+  const { rate, count } = product.rating;
 
   const renderStars = (rate) => {
     const fullStars = Math.floor(rate);
@@ -43,19 +48,19 @@ function DetailPages() {
   };
 
   const sizes =
-    result.category === "men's clothing" ||
-    result.category === "women's clothing"
+  product.category === "men's clothing" ||
+  product.category === "women's clothing"
       ? ["S", "M", "L", "XL"]
       : [];
 
   return (
     <div className="container">
-      <img src={result.image} alt={result.title} />
+      <img src={product.image} alt={product.title} />
       <div className="information">
-        <h3>{result.title}</h3>
-        <p className="description">{result.description}</p>
-        <p className="category">{result.category}</p>
-        <span className="price">Price: {result.price} €</span>
+        <h3>{product.title}</h3>
+        <p className="description">{product.description}</p>
+        <p className="category">{product.category}</p>
+        <span className="price">Price: {product.price} €</span>
 
         <div className="rating">
           <div className="stars">{renderStars(rate)}</div>
@@ -73,16 +78,16 @@ function DetailPages() {
           </div>
         )}
 
-        <div>
-          <span></span><span>available</span>
+        <div className="stockQuantity">
+          <span>{stockQuantity} </span><span>pieses available</span>
         </div>
 
         {/* Add to Cart Button */}
         <a
           onClick={() => {
-            AddToCart(result.id);
-            console.log("Added to cart:", result.title); // Console log test
-            window.location.href = "/cart";
+            AddToCart(product.id);
+            console.log("Added to cart:", product.title); // Console log test
+            // window.location.href = "/cart";
           }}
         >
           Add to Cart

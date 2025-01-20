@@ -9,6 +9,7 @@ import userRouter from "./src/routes/userRouter.js";
 import productRouter from "./src/routes/productRouter.js";
 
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3001;
 
 const _fileName = fileURLToPath(import.meta.url);
