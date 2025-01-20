@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Nasrin1235/Fake-shop#readme",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "nodemon": "^3.1.9"
   },
   "devDependencies": {

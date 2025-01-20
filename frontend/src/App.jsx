@@ -7,6 +7,7 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import NotFound from "./Pages/NotFound";
 import SearchPage from "./Pages/SearchPage";
 import LoginPage from "./Pages/LoginPage";
+import RegisterPage from "./Pages/RegisterPage"; 
 import './app.css'
 import Layout from "./Pages/Layout";
 import Category from "./components/Category";
@@ -26,6 +27,7 @@ function App() {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
