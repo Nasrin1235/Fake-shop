@@ -5,6 +5,8 @@ import { fileURLToPath } from "url";
 import { dbConnection } from "./src/scripts/dbConnection.js";
 import { seed } from "./src/scripts/seed.js";
 import cors from 'cors'
+import userRouter from "./src/routes/userRouter.js";
+import productRouter from "./src/routes/productRouter.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -18,6 +20,9 @@ await dbConnection();
 
 app.use(express.static(frontendDistPath));
 app.use(cors())
+
+app.use("/users", userRouter); 
+app.use("/products", productRouter); 
 
 // Check if products exist and seed the DB if necessary
 const initializeProducts = async () => {

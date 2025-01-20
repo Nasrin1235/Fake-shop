@@ -73,6 +73,10 @@ function DetailPages() {
           </div>
         )}
 
+        <div>
+          <span></span><span>available</span>
+        </div>
+
         {/* Add to Cart Button */}
         <a
           onClick={() => {

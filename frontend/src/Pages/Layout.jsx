@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
 
   const { totalItems } = useContext(ProductContext);
   return (
-    <div>
+    <div >
       <header className="header">
         <Link to="/" className="logo">
           <img src="./Logo.png" alt="Logo" />
