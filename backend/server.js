@@ -1,3 +1,4 @@
+
 import express from "express";
 import path from "path";
 import { Product } from "./src/models/Product.js";
@@ -10,22 +11,18 @@ import productRouter from "./src/routes/productRouter.js";
 
 const app = express();
 app.use(express.json());
-const PORT = process.env.PORT || 3001;
-
+const PORT = process.env.PORT || 3005;
 const _fileName = fileURLToPath(import.meta.url);
 const _path = path.dirname(_fileName);
 const frontendDistPath = path.join(_path, "../frontend/dist");
 
-// Initialize DB connection when the server starts
 await dbConnection();
-
 app.use(express.static(frontendDistPath));
 app.use(cors())
 
 app.use("/users", userRouter); 
 app.use("/products", productRouter); 
 
-// Check if products exist and seed the DB if necessary
 const initializeProducts = async () => {
   try {
     const products = await Product.find();
@@ -38,15 +35,12 @@ const initializeProducts = async () => {
   }
 };
 
-// Initialize products on server startup
 initializeProducts();
 
-// Return frontend on any undefined route
 app.get("*", (req, res) => {
   res.sendFile(path.join(frontendDistPath, "index.html"));
 });
 
-// Listen on the specified port
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
