@@ -1,0 +1,12 @@
+# Exclude node_modules directory
+node_modules
+# Exclude log files
+*.log
+# Exclude temporary files
+*.tmp
+# Exclude IDE configuration files (if any)
+.vscode
+.idea
+# Exclude operating system generated files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,37 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend-builder
+    volumes:
+      - ./frontend:/app/frontend  # Sync frontend code between host and container
+    ports:
+      - "3000:3000"  # Expose frontend port
+    working_dir: /app/frontend
+    command: npm run frontend  # Ensure that frontend runs in development mode
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app/backend  # Sync backend code between host and container
+    ports:
+      - "3001:3001"  # Expose backend port
+    env_file:
+      - ./backend/.env  # Use the .env file in the backend folder
+    command: npx nodemon --env-file /app/backend/.env /app/backend/server.js  # Start backend with nodemon for hot-reloading
+    depends_on:
+      - mongodb  # Ensure backend waits for mongodb to be ready
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27018:27017"  # Expose MongoDB port
+    volumes:
+      - mongodb-data:/data/db  # Persist MongoDB data
+
+volumes:
+  mongodb-data:
