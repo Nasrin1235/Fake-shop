@@ -54,6 +54,17 @@
 
 .dark {
   background-color: black;
-  color:white;
+  color:rgb(226, 34, 34);
+}
+ 
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+}
+
+.username {
+  font-weight: bold;
+  color: #333; 
 }
 

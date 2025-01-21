@@ -13,18 +13,20 @@ const RegisterPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3001/api/register', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3001/api/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, email, password }),
-        credentials: 'include' 
+        credentials: "include",
       });
 
       const data = await response.json();
       if (response.ok) {
         setError("");
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("username", username);
         navigate("/login");
       } else {
         setError(data.error);

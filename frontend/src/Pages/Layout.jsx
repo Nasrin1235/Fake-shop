@@ -6,28 +6,55 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Header.css";
 import "./Footer.css";
-import { useContext } from 'react'
 import { ProductContext } from '../contex/ProductsContext'
 import { Link, NavLink } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
+
 
 
 const Layout = ({ children }) => {
-  const {mode, modeSwitch} = useContext(ProductContext)
-  const showMode =  mode === 'lightMode' ? '' : 'dark'
+  const { mode, modeSwitch } = useContext(ProductContext);
+  const showMode = mode === 'lightMode' ? '' : 'dark';
 
   const { totalItems } = useContext(ProductContext);
+  const [username, setUsername] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    const storedUsername = localStorage.getItem("username");
+
+    if (loggedIn === "true") {
+      setIsLoggedIn(true);
+      setUsername(storedUsername || "Guest"); 
+    } else {
+      setIsLoggedIn(false);
+      setUsername("");
+    }
+  }, []);
+
+
   return (
-    <div >
+    <div>
       <header className="header">
         <Link to="/" className="logo">
           <img src="./Logo.png" alt="Logo" />
         </Link>
         <div className="header-icons">
           <button data-role="mode" onClick={modeSwitch} className={showMode}></button>
-          <NavLink to="/register" className="icon">
-            <FontAwesomeIcon icon={faUser} className="icon" />
-          </NavLink>
-
+          <div className="user-info">
+            {isLoggedIn ? (
+              <NavLink to="/login" className="username">
+              {username}
+            </NavLink>
+            ) : (
+              <NavLink to="/register" className="icon">
+                <FontAwesomeIcon icon={faUser} className="icon" />  
+                
+              </NavLink>
+            )}
+          </div>
           <NavLink to="/cart" className="icon">
             <FontAwesomeIcon icon={faBasketShopping} />
             {totalItems > 0 && <span className="item-count">{totalItems}</span>}
