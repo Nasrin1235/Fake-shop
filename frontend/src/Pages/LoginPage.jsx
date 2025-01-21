@@ -1,37 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ProductContext } from "../contex/ProductsContext";
 import "./LoginPage.css";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useContext(ProductContext);
   const navigate = useNavigate();
-  useEffect(() => {
-    // Check if the token exists in the cookie and validate it with the backend
-    const checkToken = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:3001/api/validate-token",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-        if (response.ok) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
-      } catch (error) {
-        console.error("Error validating token:", error);
-        setIsLoggedIn(false);
-      }
-    };
-    checkToken();
-  }, []);
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch("http://localhost:3001/api/login", {
@@ -46,11 +23,9 @@ const LoginPage = () => {
       if (response.ok) {
         setError("");
         setIsLoggedIn(true);
-        localStorage.setItem("isLoggedIn", "true"); //
-        localStorage.setItem("username", data.username); //
         // Do not store the token in localStorage, it will be handled by the cookie
         // The server will set the token in the cookie
-       
+        navigate("/");
       } else {
         setError(data.error || "Incorrect username or password");
       }
@@ -61,11 +36,8 @@ const LoginPage = () => {
   };
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn"); //
-    localStorage.removeItem("username"); //
     // Remove the token cookie on logout
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    localStorage.removeItem("token"); 
     navigate("/login");
   };
   const token = document.cookie
