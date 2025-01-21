@@ -11,18 +11,21 @@ const RegisterPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    console.log('register:', username, email, password)
 
     try {
-      const response = await fetch('http://localhost:3003/api/register', {
+      const response = await fetch('http://localhost:3001/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ username, email, password }),
-        credentials: 'include' // Включение cookies
+        credentials: 'include' 
       });
 
       const data = await response.json();
+      console.log('Response from server:', data);  // 调试输出响应
+
       if (response.ok) {
         setError("");
         navigate("/login");
@@ -30,7 +33,7 @@ const RegisterPage = () => {
         setError(data.error);
       }
     } catch (error) {
-      setError("Ошибка при попытке регистрации");
+      setError(error.message);
     }
   };
 
