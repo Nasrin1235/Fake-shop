@@ -8,7 +8,7 @@ import { seed } from "./src/scripts/seed.js";
 import cors from 'cors';
 import userRouter from "./src/routes/userRouter.js";
 const app = express();
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 3001;
 const _fileName = fileURLToPath(import.meta.url);
 const _path = path.dirname(_fileName);
 const frontendDistPath = path.join(_path, "../frontend/dist");
