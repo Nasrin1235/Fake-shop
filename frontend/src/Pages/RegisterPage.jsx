@@ -13,13 +13,13 @@ const RegisterPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3003/api/register', {
+      const response = await fetch('http://localhost:3001/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ username, email, password }),
-        credentials: 'include' // Включение cookies
+        credentials: 'include' 
       });
 
       const data = await response.json();
@@ -30,7 +30,7 @@ const RegisterPage = () => {
         setError(data.error);
       }
     } catch (error) {
-      setError("Ошибка при попытке регистрации");
+      setError("Error while registering, please try again.");
     }
   };
 
