@@ -37,9 +37,31 @@ userRouter.post("/login", async (req, res) => {
 });
 
 // Logout User
-userRouter.get("/logout", (req, res) => {
-  res.status(200).json({ message: "Logged out successfully" });
+
+userRouter.post("/logout", async (req, res) => {
+  try {
+    res.clearCookie("token"); 
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to logout" });
+  }
 });
+
+userRouter.get('/validate-token', (req, res) => {
+  const token = req.cookies.token
+
+  if (!token) {
+    return res.status(401).json({ error: 'No token provided' });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
+    res.status(200).json({ message: 'Token is valid', payload: decoded });
+  })
+
+})
 
 export default userRouter;
 

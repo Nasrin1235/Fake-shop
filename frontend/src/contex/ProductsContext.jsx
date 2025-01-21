@@ -4,9 +4,10 @@ const ProductContext = createContext();
 const productRoute = "http://localhost:3001/products";
 
 function ProductsProvider({ children }) {
-  // adding "products" and "categories"
+    // adding "products" and "categories"
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const fetchData = async (endpoint, setState) => {
     try {
@@ -30,6 +31,31 @@ function ProductsProvider({ children }) {
   }, []);
 
   //adding "productsIncart" and "display-mode" and save them in localStorage on changing
+
+
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/validate-token", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error validating token:", error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkToken();
+
+  }, []);
+
   const [productsIncart, setProductsIncart] = useState(() => {
     const savedCart = localStorage.getItem("productsIncart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -44,7 +70,7 @@ function ProductsProvider({ children }) {
     localStorage.setItem("mode", JSON.stringify(mode));
   }, [productsIncart, mode]);
 
-  // adding localStorage listener to watch "productsIncart" and "mode" for real-time display
+    // adding localStorage listener to watch "productsIncart" and "mode" for real-time display
   const handleStorageChange = (event) => {
     if (event.key === "productsIncart") {
       const updatedCart = JSON.parse(event.newValue);
@@ -62,7 +88,7 @@ function ProductsProvider({ children }) {
     };
   }, []);
 
-  // adding "totalItems" and "totalPrice"
+   // adding "totalItems" and "totalPrice"
   const totalItems = productsIncart.reduce(
     (acc, product) => acc + product.quantity,
     0
@@ -227,6 +253,8 @@ function ProductsProvider({ children }) {
         givenLowestPrice,
         givenHighestPrice,
         stockQuantity,
+        isLoggedIn,
+        setIsLoggedIn,
         setStockQuantity,
         AddToCart,
         clearCart,
