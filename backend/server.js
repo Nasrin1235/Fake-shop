@@ -7,6 +7,8 @@ import { seed } from "./src/scripts/seed.js";
 import cors from "cors";
 import userRouter from "./src/routes/userRouter.js";
 import productRouter from "./src/routes/productRouter.js";
+import cookieParser from 'cookie-parser';
+
 
 const app = express();
 app.use(express.json());

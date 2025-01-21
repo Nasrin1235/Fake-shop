@@ -11,10 +11,13 @@ const LoginPage = () => {
     // Check if the token exists in the cookie and validate it with the backend
     const checkToken = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/validate-token", {
-          method: "GET",
-          credentials: "include",
-        });
+        const response = await fetch(
+          "http://localhost:3001/api/validate-token",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
         if (response.ok) {
           setIsLoggedIn(true);
         } else {
@@ -42,9 +45,11 @@ const LoginPage = () => {
       if (response.ok) {
         setError("");
         setIsLoggedIn(true);
+        localStorage.setItem("isLoggedIn", "true"); //
+        localStorage.setItem("username", data.username); //
         // Do not store the token in localStorage, it will be handled by the cookie
         // The server will set the token in the cookie
-        navigate("/");
+       
       } else {
         setError(data.error || "Incorrect username or password");
       }
@@ -55,14 +60,18 @@ const LoginPage = () => {
   };
   const handleLogout = () => {
     setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn"); //
+    localStorage.removeItem("username"); //
     // Remove the token cookie on logout
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     navigate("/login");
   };
-  const token = document.cookie.split('; ').find(row => row.startsWith('token='));
-  console.log('document.cookie:', document.cookie)
-  console.log('isLoggedIn:', isLoggedIn)
-  console.log('token:', token)
+  const token = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("token="));
+  console.log("document.cookie:", document.cookie);
+  console.log("isLoggedIn:", isLoggedIn);
+  console.log("token:", token);
   return (
     <section className="login-section">
       <div className="login-container">

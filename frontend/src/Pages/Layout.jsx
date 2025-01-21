@@ -46,12 +46,11 @@ const Layout = ({ children }) => {
           <div className="user-info">
             {isLoggedIn ? (
               <NavLink to="/login" className="username">
-              {username}
-            </NavLink>
+                {username}
+              </NavLink>
             ) : (
               <NavLink to="/register" className="icon">
-                <FontAwesomeIcon icon={faUser} className="icon" />  
-                
+                <FontAwesomeIcon icon={faUser} className="icon" />
               </NavLink>
             )}
           </div>
