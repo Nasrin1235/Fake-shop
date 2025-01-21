@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 
 const ProductContext = createContext();
-const productRoute = 'http://localhost:3001/products'
+const productRoute = "http://localhost:3001/products";
 
 function ProductsProvider({ children }) {
   // adding "products" and "categories"
@@ -122,98 +122,90 @@ function ProductsProvider({ children }) {
   }
 
   async function deleteProduct(id) {
-    const product = productsIncart.find(product => product.id === id)
+    const product = productsIncart.find((product) => product.id === id);
     if (product) {
-      const quantityToAdd = product.quantity
+      const quantityToAdd = product.quantity;
       const response = await fetch(`${productRoute}/${id}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           quantityToAdd,
-        })
-      })
+        }),
+      });
 
       if (!response.ok) {
         console.error("Failed to update product stock");
         return;
       }
-      const data = await response.json()
-      const updatedProduct = data.product
-      setStockQuantity(updatedProduct.stockQuantity)
+      const data = await response.json();
+      const updatedProduct = data.product;
+      setStockQuantity(updatedProduct.stockQuantity);
     }
     const newCart = productsIncart.filter((product) => product.id !== id);
-    
+
     setProductsIncart(newCart);
   }
 
-
   const [stockQuantity, setStockQuantity] = useState(null);
   async function AddToCart(id, Increment = 1) {
-    
-    let newProduct = {}
-    let productStockQuantity
-    let product
-    
+    let productStockQuantity;
+    let product;
+
+    // check product stock quantity
     try {
-      const response = await fetch(`${productRoute}/${id}`)
-      product = await response.json()
-    } catch(error) {
-      console.error('Error fetching stockQuantity', error.message)
-      return
+      const response = await fetch(`${productRoute}/${id}`);
+      product = await response.json();
+    } catch (error) {
+      console.error("Error fetch product", error.message);
+      return;
     }
 
-    productStockQuantity = product.stockQuantity - Increment
-    setStockQuantity(productStockQuantity)
-
-    if (Increment > 0 && productStockQuantity <= 0) {
-      return alert("No more stocks!"); 
+    if (Increment > 0 && product.stockQuantity <= 0) {
+      return alert("No more stocks!");
     }
 
-    setProductsIncart((preCart) => {
-      const existingProduct = preCart.find((product) => product.id === id);
-      if (existingProduct) {
-        console.log('existingProduct comes in cart')
-        console.log('productToUpdate.stockQuantity is:', existingProduct.stockQuantity)
-
-        if (existingProduct.quantity + Increment > 0)
-          return preCart.map((product) =>
-            product.id === id
-              ? { ...product, quantity: product.quantity + Increment }
-              : product
-          );
-        else return preCart.filter((product) => product.id !== id);
-      }
-
-      newProduct = products.find((product) => product.id === id);
-      newProduct.quantity = 1
-      if (newProduct) {
-        console.log('new product comes in cart')
-        return [newProduct, ...preCart];
-      }
-      return preCart;
-    });
-
+    //update product data
     try {
-      const productToUpdate = productsIncart.find((product) => product.id === id) || newProduct;
-      console.log('productToUpdate is:', productToUpdate)
-      if (productToUpdate) {
-        await fetch(`${productRoute}/update-stock`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            Increment,
-            productToUpdate
-          }),
-        });
-        console.log(`Stock updated for product ${id}`);
-      }
+      const response = await fetch(`${productRoute}/update-stock`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Increment,
+          id,
+        }),
+      });
+      console.log(`Stock updated for product ${id}`);
+      const data = await response.json();
+      product = data.product;
+      console.log("data is", data);
     } catch (error) {
       console.error("Error updating stock:", error.message);
+      return;
     }
+    console.log(product);
+    productStockQuantity = product.stockQuantity;
+    setStockQuantity(productStockQuantity);
+
+    setProductsIncart((preCart) => {
+      if (product.quantity > 0) {
+        // If the product exists in the cart, update it
+        const productExistsInCart = preCart.find((item) => item.id === id);
+        if (productExistsInCart) {
+          return preCart.map((item) =>
+            item.id === id ? product : item
+          );
+        }
+        // If the product doesn't exist in the cart, add it
+        return [...preCart, product];
+      } else {
+        // If quantity is 0, remove the product from the cart
+        return preCart.filter((item) => item.id !== id);
+      }
+    });
   }
 
   function clearCart() {
