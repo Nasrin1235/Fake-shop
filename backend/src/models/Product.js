@@ -40,6 +40,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  quantity: {
+    type: Number,
+    default: 0, 
+  }
 })
 
 export const Product = mongoose.model('Product', productSchema)

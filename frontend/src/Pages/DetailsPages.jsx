@@ -1,20 +1,35 @@
 import { useParams } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../contex/ProductsContext";
 import { Link } from "react-router-dom";
 import "./DetailsPage.css";
 
 function DetailPages() {
   const { id } = useParams();
-  const { products, AddToCart, productsIncart } = useContext(ProductContext);
-  const result = products.find((product) => product.id === Number(id));
-  console.log("result:", result);
-  // AddToCard(1)
-  console.log("productsIncart:", productsIncart);
+  const { AddToCart, stockQuantity, setStockQuantity} = useContext(ProductContext);
+  const [product, setProduct] = useState(null);
 
-  if (!result) return <h1>Product not found</h1>;
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/products/${id}`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch product: ${response.status}`);
+        }
+        const result = await response.json();
+        setProduct(result);
+        setStockQuantity(result.stockQuantity); 
+      } catch (error) {
+        console.error("Error fetching product:", error.message);
+      }
+    };
 
-  const { rate, count } = result.rating;
+    fetchProduct();
+  }, [id, setStockQuantity]);
+
+  if (!product) return <h1>Product not found</h1>;
+
+  const { rate, count } = product.rating;
 
   const renderStars = (rate) => {
     const fullStars = Math.floor(rate);
@@ -43,19 +58,19 @@ function DetailPages() {
   };
 
   const sizes =
-    result.category === "men's clothing" ||
-    result.category === "women's clothing"
+  product.category === "men's clothing" ||
+  product.category === "women's clothing"
       ? ["S", "M", "L", "XL"]
       : [];
 
   return (
     <div className="container">
-      <img src={result.image} alt={result.title} />
+      <img src={product.image} alt={product.title} />
       <div className="information">
-        <h3>{result.title}</h3>
-        <p className="description">{result.description}</p>
-        <p className="category">{result.category}</p>
-        <span className="price">Price: {result.price} €</span>
+        <h3>{product.title}</h3>
+        <p className="description">{product.description}</p>
+        <p className="category">{product.category}</p>
+        <span className="price">Price: {product.price} €</span>
 
         <div className="rating">
           <div className="stars">{renderStars(rate)}</div>
@@ -73,12 +88,17 @@ function DetailPages() {
           </div>
         )}
 
+        <div className="stockQuantity">
+          <span>{stockQuantity} </span><span>pieses available</span>
+        </div>
+
         {/* Add to Cart Button */}
         <a
           onClick={() => {
-            AddToCart(result.id);
-            console.log("Added to cart:", result.title); // Console log test
-            window.location.href = "/cart";
+            AddToCart(product.id);
+            console.log("Added to cart:", product.title); 
+            // window.location.reload();
+            // window.location.href = "/cart";
           }}
         >
           Add to Cart

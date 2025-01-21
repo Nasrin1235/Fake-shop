@@ -4,7 +4,7 @@
   min-height: 100vh;
   width: 100%;
   justify-content: space-between;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
 
   img {
     width: 30%;
@@ -16,12 +16,12 @@
     flex-direction: column;
     justify-content: center;
 
-    h3 {
+    /* h3 {
       color: black;
-    }
+    } */
 
     .description {
-      color: black;
+      /* color: black; */
       margin: 20px 0;
       margin-right: 3rem;
       width: 50%;
@@ -80,9 +80,19 @@
     margin: 4px;
     border: 1px solid #ccc;
     background-color: #f8f8f8;
+    color:rgb(40, 37, 33);
     cursor: pointer;
     font-size: 14px;
     border-radius: 4px;
     transition: background-color 0.2s;
+  }
+
+  .stockQuantity {
+    padding: 8px;
+
+    span:first-child {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
   }
 }

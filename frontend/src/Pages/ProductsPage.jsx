@@ -13,7 +13,7 @@ function ProductsPage() {
 
   useEffect(() => {
     resetGivenPrice()
-  }, [location.pathname]);
+  }, [location.pathname, resetGivenPrice]);
 
   function changeGivenLowestPrice(e) {
     setGivenLowestPrice(e.target.value); 

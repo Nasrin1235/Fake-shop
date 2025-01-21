@@ -1,7 +1,6 @@
 import { Product } from "../models/Product.js";
 import { api } from "./config.js";
 import { dbConnection } from "./dbConnection.js";
-import mongoose from "mongoose";
 
 export async function seed() {
   try {
