@@ -8,11 +8,14 @@ const userRouter = express.Router();
 // Register a New User
 userRouter.post("/register", async (req, res) => {
   try {
+    console.log('Received request data:', req.body);  
+
     const { username, email, password } = req.body;
     const user = await User.create({ username, email, password });
     res.status(201).json({ message: "User registered successfully", user });
   } catch (error) {
-    res.status(400).json({ error: "Failed to register user" });
+    console.log(error.message)
+    res.status(400).json({ error: error.message});
   }
 });
 
