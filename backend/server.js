@@ -7,6 +7,8 @@ import { dbConnection } from "./src/scripts/dbConnection.js";
 import { seed } from "./src/scripts/seed.js";
 import cors from 'cors';
 import userRouter from "./src/routes/userRouter.js";
+
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 const _fileName = fileURLToPath(import.meta.url);
