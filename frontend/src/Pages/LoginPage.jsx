@@ -30,7 +30,8 @@ const LoginPage = () => {
     };
     checkToken();
   }, []);
-  const handleLogin = async (e) => {
+
+  const handleLogin = (e) => {
     e.preventDefault();
     try {
       const response = await fetch("http://localhost:3001/api/login", {
@@ -64,6 +65,7 @@ const LoginPage = () => {
     localStorage.removeItem("username"); //
     // Remove the token cookie on logout
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    localStorage.removeItem("token"); 
     navigate("/login");
   };
   const token = document.cookie
