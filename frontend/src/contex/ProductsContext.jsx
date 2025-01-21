@@ -30,6 +30,34 @@ function ProductsProvider({ children }) {
     fetchData("/products/categories", setCategories);
   }, []);
 
+  //add isLoggedIn
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    // Check if the token exists in the cookie and validate it with the backend
+    const checkToken = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3001/api/validate-token",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        if (response.ok) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error validating token:", error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkToken();
+  }, []);
+
   //adding "productsIncart" and "display-mode" and save them in localStorage on changing
 
 
