@@ -19,9 +19,14 @@ const frontendDistPath = path.join(_path, "../frontend/dist");
 
 await dbConnection();
 app.use(express.static(frontendDistPath));
-app.use(cors());
-app.use(express.json());
-app.use("/api", userRouter);
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
+
+app.use("/api", userRouter); 
+app.use("/products", productRouter); 
+
 
 const initializeProducts = async () => {
   try {
