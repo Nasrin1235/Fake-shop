@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,22 +16,40 @@ const LoginPage = () => {
     }
   }, []);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (username === "oln" && password === "oln") {
-      setError("");
-      setIsLoggedIn(true);
-      localStorage.setItem("isLoggedIn", "true");
-      navigate("/");
-    } else {
-      setError("Incorrect user name or password");
+    try {
+      const response = await fetch("http://localhost:3001/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setError("");
+        setIsLoggedIn(true);
+       
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("token", data.token); 
+        navigate("/"); 
+      } else {
+        setError(data.error || "Incorrect username or password");
+      }
+    } catch (err) {
+      setError("Something went wrong, please try again.");
+      console.error("Login error:", err);
     }
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token"); 
     navigate("/login");
   };
 
@@ -53,13 +71,13 @@ const LoginPage = () => {
               <div className="input-field">
                 <label className="input-label">Name</label>
                 <input
-                  type="text"
-                  placeholder="Enter your name"
+                  type="email"
+                  placeholder="Enter your email"
                   className="text-input"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
-                  autoComplete="username"
+                  autoComplete="email"
                 />
               </div>
               <div className="input-field">
