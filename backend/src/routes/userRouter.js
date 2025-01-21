@@ -71,6 +71,12 @@ userRouter.get('/validate-token', (req, res) => {
 
 // Logout User
 userRouter.get("/logout", (req, res) => {
+  res.cookie("token", '', {
+    httpOnly: true,
+    sameSite:'strict',
+    secure: true,
+    expires: new Date(0),
+  })
   res.status(200).json({ message: "Logged out successfully" });
 });
 

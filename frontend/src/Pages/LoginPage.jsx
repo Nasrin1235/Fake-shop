@@ -44,20 +44,15 @@ const LoginPage = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await fetch('http://localhost:3001/api/logout', {
+      method:'GET',
+      credentials: 'include'
+    })
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
     setIsLoggedIn(false);
-
-    // Remove the token cookie on logout
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-
     navigate("/login");
   };
-  const token = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("token="));
-  console.log("document.cookie:", document.cookie);
-  console.log("isLoggedIn:", isLoggedIn);
-  console.log("token:", token);
 
   return (
     <section className="login-section">
