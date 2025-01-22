@@ -241,6 +241,7 @@ function ProductsProvider({ children }) {
         givenHighestPrice,
         stockQuantity,
         isLoggedIn,
+        setProductsIncart,
         setIsLoggedIn,
         setStockQuantity,
         AddToCart,

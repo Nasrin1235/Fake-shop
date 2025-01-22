@@ -7,7 +7,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { isLoggedIn, setIsLoggedIn, clearCart, productsInCart } =
+  const { isLoggedIn, setIsLoggedIn, clearCart, productsIncart, setProductsIncart} =
     useContext(ProductContext);
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ const LoginPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, cart: productsInCart }),
+        body: JSON.stringify({ email, password }),
         credentials: "include",
       });
 
@@ -53,6 +53,13 @@ const LoginPage = () => {
       if (response.ok) {
         setError("");
         setIsLoggedIn(true);
+  
+        if (data.cart) {
+          setProductsIncart(data.cart); 
+          console.log("Cart data loaded:", data.cart);
+        } else {
+          console.warn("No cart data received from server.");
+        }
       } else {
         setError(data.error || "Incorrect username or password");
       }
@@ -63,15 +70,22 @@ const LoginPage = () => {
   };
 
   const handleLogout = async () => {
+    console.log('productsIncart logout:',productsIncart)
     try {
       const response = await fetch("http://localhost:3001/api/logout", {
         method: "POST",
         credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cart: productsIncart }),
       });
 
       if (response.ok) {
+      
         setIsLoggedIn(false);
         clearCart();
+        console.log("productsIncart in localstorage cleared!")
         navigate("/login");
       } else {
         console.error("Logout failed");

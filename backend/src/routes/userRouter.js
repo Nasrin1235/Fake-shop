@@ -2,10 +2,9 @@ import express from "express";
 import { User } from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import { Product } from "../models/Product.js";
 
 const userRouter = express.Router();
-
 
 // Register a New User
 userRouter.post("/register", async (req, res) => {
@@ -46,13 +45,21 @@ userRouter.post("/login", async (req, res) => {
       secure: true,
       expires: new Date(Date.now() + 5 * 60 * 1000),
     });
-    console.log("Login successful")
-    res.status(200).json({ message: "Login successful", token });
+
+    // Populate the cart with Product details
+    const populatedUser = await User.findById(user._id).populate('cart.productId');
+
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      cart: populatedUser.cart,  // Return populated cart
+    });
   } catch (error) {
     res.status(500).json({ error: "Failed to login" });
   }
 });
 
+// Validate Token
 userRouter.get('/validate-token', (req, res) => {
   const token = req.cookies.token;
 
@@ -69,16 +76,49 @@ userRouter.get('/validate-token', (req, res) => {
 });
 
 // Logout User
-userRouter.post("/logout", (req, res) => {
-  res.cookie("token", "", {
-    httpOnly: true,
-    sameSite: "strict",
-    secure: false,
-    expires: new Date(0),
-  });
-  res.status(200).json({ message: "Logged out successfully" });
+userRouter.post("/logout", async (req, res) => {
+  try {
+    const { cart } = req.body; 
+    const token = req.cookies.token; 
+    
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET); 
+    const userId = decodedToken.id;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // In case the cart data is already populated with product details, no need to refetch productId
+    const updatedCart = cart.map(item => {
+      return {
+        id: item.id,
+        quantity: item.quantity,
+        image: item.image, 
+        title: item.title, 
+        price: item.price,
+      };
+    });
+
+    user.cart = updatedCart;
+    await user.save();
+
+    res.cookie("token", "", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: false,
+      expires: new Date(0), 
+    });
+
+    return res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.error("Logout error:", error);
+    return res.status(500).json({ message: error.message });
+  }
 });
-
-
 
 export default userRouter;
