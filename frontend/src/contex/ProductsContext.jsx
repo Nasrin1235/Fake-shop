@@ -4,7 +4,7 @@ const ProductContext = createContext();
 const productRoute = "http://localhost:3001/products";
 
 function ProductsProvider({ children }) {
-    // adding "products" and "categories"
+  // adding "products" and "categories"
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,37 +30,6 @@ function ProductsProvider({ children }) {
     fetchData("/products/categories", setCategories);
   }, []);
 
-  //add isLoggedIn
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    // Check if the token exists in the cookie and validate it with the backend
-    const checkToken = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:3001/api/validate-token",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-
-        if (response.ok) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
-      } catch (error) {
-        console.error("Error validating token:", error);
-        setIsLoggedIn(false);
-      }
-    };
-
-    checkToken();
-  }, []);
-
-  //adding "productsIncart" and "display-mode" and save them in localStorage on changing
-
-
   useEffect(() => {
     const checkToken = async () => {
       try {
@@ -81,8 +50,7 @@ function ProductsProvider({ children }) {
     };
 
     checkToken();
-
-  }, []);
+  }, [setIsLoggedIn]);
 
   const [productsIncart, setProductsIncart] = useState(() => {
     const savedCart = localStorage.getItem("productsIncart");
@@ -98,7 +66,7 @@ function ProductsProvider({ children }) {
     localStorage.setItem("mode", JSON.stringify(mode));
   }, [productsIncart, mode]);
 
-    // adding localStorage listener to watch "productsIncart" and "mode" for real-time display
+// adding localStorage listener to watch "productsIncart" and "mode" for real-time display
   const handleStorageChange = (event) => {
     if (event.key === "productsIncart") {
       const updatedCart = JSON.parse(event.newValue);
@@ -125,7 +93,6 @@ function ProductsProvider({ children }) {
     .reduce((acc, product) => acc + product.quantity * product.price, 0)
     .toFixed(2);
 
-  // adding "lowestPrice", "highestPrice" and function "calculatePriceRange"
   const [lowestPrice, setLowestPrice] = useState(null);
   const [highestPrice, setHighestPrice] = useState(null);
 
@@ -150,7 +117,6 @@ function ProductsProvider({ children }) {
     }
   }
 
-  // adding "givenLowestPrice", "givenHighestPrice", function "setPriceRange", "resetGivenPrice"
   const [givenLowestPrice, setGivenLowestPrice] = useState("");
   const [givenHighestPrice, setGivenHighestPrice] = useState("");
 
@@ -169,7 +135,6 @@ function ProductsProvider({ children }) {
     setGivenHighestPrice("");
   }
 
-  // adding function "modeSwitch", "deleteProduct"(in cart), "AddToCart", "clearCart"
   function modeSwitch() {
     const newMode = mode === "lightMode" ? "darkMode" : "lightMode";
     setMode(newMode);
@@ -198,7 +163,6 @@ function ProductsProvider({ children }) {
       setStockQuantity(updatedProduct.stockQuantity);
     }
     const newCart = productsIncart.filter((product) => product.id !== id);
-
     setProductsIncart(newCart);
   }
 
@@ -207,7 +171,6 @@ function ProductsProvider({ children }) {
     let productStockQuantity;
     let product;
 
-    // check product stock quantity
     try {
       const response = await fetch(`${productRoute}/${id}`);
       product = await response.json();
@@ -220,7 +183,6 @@ function ProductsProvider({ children }) {
       return alert("No more stocks!");
     }
 
-    //update product data
     try {
       const response = await fetch(`${productRoute}/update-stock`, {
         method: "PATCH",
@@ -246,17 +208,14 @@ function ProductsProvider({ children }) {
 
     setProductsIncart((preCart) => {
       if (product.quantity > 0) {
-        // If the product exists in the cart, update it
         const productExistsInCart = preCart.find((item) => item.id === id);
         if (productExistsInCart) {
           return preCart.map((item) =>
             item.id === id ? product : item
           );
         }
-        // If the product doesn't exist in the cart, add it
         return [...preCart, product];
       } else {
-        // If quantity is 0, remove the product from the cart
         return preCart.filter((item) => item.id !== id);
       }
     });

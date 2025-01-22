@@ -1,4 +1,4 @@
-import { useState, useContext,useEffect} from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "../contex/ProductsContext";
 import "./LoginPage.css";
@@ -7,17 +7,21 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const {isLoggedIn, setIsLoggedIn,clearCart,productsInCart } = useContext(ProductContext);
+  const { isLoggedIn, setIsLoggedIn, clearCart, productsInCart } =
+    useContext(ProductContext);
   const navigate = useNavigate();
-  
-useEffect(() => {
+
+  useEffect(() => {
     // Check if the token exists in the cookie and validate it with the backend
     const checkToken = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/validate-token", {
-          method: "GET",
-          credentials: "include",
-        });
+        const response = await fetch(
+          "http://localhost:3001/api/validate-token",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
         if (response.ok) {
           setIsLoggedIn(true);
         } else {
@@ -31,8 +35,6 @@ useEffect(() => {
     checkToken();
   }, [setIsLoggedIn]);
 
-
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -42,7 +44,7 @@ useEffect(() => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password ,productsInCart }),
+        body: JSON.stringify({ email, password, cart: productsInCart }),
         credentials: "include",
       });
 
@@ -51,7 +53,6 @@ useEffect(() => {
       if (response.ok) {
         setError("");
         setIsLoggedIn(true);
-     
       } else {
         setError(data.error || "Incorrect username or password");
       }
@@ -80,10 +81,12 @@ useEffect(() => {
     }
   };
 
-  const token = document.cookie.split('; ').find(row => row.startsWith('token='));
-  console.log('document.cookie:', document.cookie)
-  console.log('isLoggedIn:', isLoggedIn)
-  console.log('token:', token)
+  const token = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("token="));
+  console.log("document.cookie:", document.cookie);
+  console.log("isLoggedIn:", isLoggedIn);
+  console.log("token:", token);
 
   return (
     <section className="login-section">
@@ -106,7 +109,7 @@ useEffect(() => {
                   type="email"
                   placeholder="Enter your email"
                   className="text-input"
-                  value={email}
+                  value={email || ""}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
@@ -118,7 +121,7 @@ useEffect(() => {
                   type="password"
                   placeholder="Enter your password"
                   className="text-input"
-                  value={password}
+                  value={password || ""}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
