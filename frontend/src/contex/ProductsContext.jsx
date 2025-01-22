@@ -30,28 +30,6 @@ function ProductsProvider({ children }) {
     fetchData("/products/categories", setCategories);
   }, []);
 
-  useEffect(() => {
-    const checkToken = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/api/validate-token", {
-          method: "GET",
-          credentials: "include",
-        });
-
-        if (response.ok) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
-      } catch (error) {
-        console.error("Error validating token:", error);
-        setIsLoggedIn(false);
-      }
-    };
-
-    checkToken();
-  }, [setIsLoggedIn]);
-
   const [productsIncart, setProductsIncart] = useState(() => {
     const savedCart = localStorage.getItem("productsIncart");
     return savedCart ? JSON.parse(savedCart) : [];

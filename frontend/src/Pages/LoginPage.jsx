@@ -12,7 +12,6 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if the token exists in the cookie and validate it with the backend
     const checkToken = async () => {
       try {
         const response = await fetch(
