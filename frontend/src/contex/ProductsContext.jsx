@@ -1,63 +1,50 @@
 import { createContext, useEffect, useState } from "react";
-
 const ProductContext = createContext();
 const productRoute = "http://localhost:3001/products";
-
 function ProductsProvider({ children }) {
   // adding "products" and "categories"
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState(null); //
   const fetchData = async (endpoint, setState) => {
     try {
       const response = await fetch(`http://localhost:3001${endpoint}`);
-
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
       const data = await response.json();
-
       setState(data);
     } catch (error) {
       console.error(`Error fetching data from ${endpoint}:`, error.message);
     }
   };
-
   useEffect(() => {
     fetchData("/products", setProducts);
     fetchData("/products/categories", setCategories);
   }, []);
-
-  //add isLoggedIn
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
-    // Check if the token exists in the cookie and validate it with the backend
     const checkToken = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:3001/api/validate-token",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-
+        const response = await fetch("http://localhost:3001/api/validate-token", {
+          method: "GET",
+          credentials: "include",
+        });
         if (response.ok) {
           setIsLoggedIn(true);
+          const data = await response.json();//
+          setUsername(data.username);//
         } else {
           setIsLoggedIn(false);
+          setUsername(null);
         }
       } catch (error) {
         console.error("Error validating token:", error);
         setIsLoggedIn(false);
       }
     };
-
     checkToken();
-  }, []);
-
-  //adding "productsIncart" and "display-mode" and save them in localStorage on changing
+  }, [setIsLoggedIn]);
   const [productsIncart, setProductsIncart] = useState(() => {
     const savedCart = localStorage.getItem("productsIncart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -66,13 +53,11 @@ function ProductsProvider({ children }) {
     const savedMode = localStorage.getItem("mode");
     return savedMode ? JSON.parse(savedMode) : "lightMode";
   });
-
   useEffect(() => {
     localStorage.setItem("productsIncart", JSON.stringify(productsIncart));
     localStorage.setItem("mode", JSON.stringify(mode));
   }, [productsIncart, mode]);
-
-  // adding localStorage listener to watch "productsIncart" and "mode" for real-time display
+// adding localStorage listener to watch "productsIncart" and "mode" for real-time display
   const handleStorageChange = (event) => {
     if (event.key === "productsIncart") {
       const updatedCart = JSON.parse(event.newValue);
@@ -82,15 +67,13 @@ function ProductsProvider({ children }) {
       setMode(updatedMode);
     }
   };
-
   useEffect(() => {
     window.addEventListener("storage", handleStorageChange);
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
-
-  // adding "totalItems" and "totalPrice"
+   // adding "totalItems" and "totalPrice"
   const totalItems = productsIncart.reduce(
     (acc, product) => acc + product.quantity,
     0
@@ -98,14 +81,10 @@ function ProductsProvider({ children }) {
   const totalPrice = productsIncart
     .reduce((acc, product) => acc + product.quantity * product.price, 0)
     .toFixed(2);
-
-  // adding "lowestPrice", "highestPrice" and function "calculatePriceRange"
   const [lowestPrice, setLowestPrice] = useState(null);
   const [highestPrice, setHighestPrice] = useState(null);
-
   function calculatePriceRange(category) {
     let allPrices = [];
-
     if (category === "all") {
       allPrices = products.map((product) => product.price);
     } else if (categories.includes(category)) {
@@ -114,7 +93,6 @@ function ProductsProvider({ children }) {
       );
       allPrices = productsInCategory.map((product) => product.price);
     }
-
     if (allPrices.length > 0) {
       setLowestPrice(Math.min(...allPrices));
       setHighestPrice(Math.max(...allPrices));
@@ -123,11 +101,8 @@ function ProductsProvider({ children }) {
       setHighestPrice(0);
     }
   }
-
-  // adding "givenLowestPrice", "givenHighestPrice", function "setPriceRange", "resetGivenPrice"
   const [givenLowestPrice, setGivenLowestPrice] = useState("");
   const [givenHighestPrice, setGivenHighestPrice] = useState("");
-
   function setPriceRange(e) {
     const { name, value } = e.target;
     if (name === "givenLowestPrice") {
@@ -137,18 +112,14 @@ function ProductsProvider({ children }) {
       setGivenHighestPrice(value);
     }
   }
-
   function resetGivenPrice() {
     setGivenLowestPrice("");
     setGivenHighestPrice("");
   }
-
-  // adding function "modeSwitch", "deleteProduct"(in cart), "AddToCart", "clearCart"
   function modeSwitch() {
     const newMode = mode === "lightMode" ? "darkMode" : "lightMode";
     setMode(newMode);
   }
-
   async function deleteProduct(id) {
     const product = productsIncart.find((product) => product.id === id);
     if (product) {
@@ -162,7 +133,6 @@ function ProductsProvider({ children }) {
           quantityToAdd,
         }),
       });
-
       if (!response.ok) {
         console.error("Failed to update product stock");
         return;
@@ -172,16 +142,12 @@ function ProductsProvider({ children }) {
       setStockQuantity(updatedProduct.stockQuantity);
     }
     const newCart = productsIncart.filter((product) => product.id !== id);
-
     setProductsIncart(newCart);
   }
-
   const [stockQuantity, setStockQuantity] = useState(null);
   async function AddToCart(id, Increment = 1) {
     let productStockQuantity;
     let product;
-
-    // check product stock quantity
     try {
       const response = await fetch(`${productRoute}/${id}`);
       product = await response.json();
@@ -189,12 +155,9 @@ function ProductsProvider({ children }) {
       console.error("Error fetch product", error.message);
       return;
     }
-
     if (Increment > 0 && product.stockQuantity <= 0) {
       return alert("No more stocks!");
     }
-
-    //update product data
     try {
       const response = await fetch(`${productRoute}/update-stock`, {
         method: "PATCH",
@@ -217,30 +180,24 @@ function ProductsProvider({ children }) {
     console.log(product);
     productStockQuantity = product.stockQuantity;
     setStockQuantity(productStockQuantity);
-
     setProductsIncart((preCart) => {
       if (product.quantity > 0) {
-        // If the product exists in the cart, update it
         const productExistsInCart = preCart.find((item) => item.id === id);
         if (productExistsInCart) {
           return preCart.map((item) =>
             item.id === id ? product : item
           );
         }
-        // If the product doesn't exist in the cart, add it
         return [...preCart, product];
       } else {
-        // If quantity is 0, remove the product from the cart
         return preCart.filter((item) => item.id !== id);
       }
     });
   }
-
   function clearCart() {
     setProductsIncart([]);
     localStorage.setItem("productsIncart", JSON.stringify([]));
   }
-
   return (
     <ProductContext.Provider
       value={{
@@ -256,6 +213,8 @@ function ProductsProvider({ children }) {
         givenHighestPrice,
         stockQuantity,
         isLoggedIn,
+        username,//
+        setUsername,//
         setIsLoggedIn,
         setStockQuantity,
         AddToCart,
@@ -267,11 +226,11 @@ function ProductsProvider({ children }) {
         resetGivenPrice,
         setGivenLowestPrice,
         setGivenHighestPrice,
+        
       }}
     >
       {children}
     </ProductContext.Provider>
   );
 }
-
 export { ProductsProvider, ProductContext };
