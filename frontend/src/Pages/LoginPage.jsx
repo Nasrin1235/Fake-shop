@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "../contex/ProductsContext";
 import "./LoginPage.css";
@@ -6,15 +6,33 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn, clearCart, productsInCart } =
+    useContext(ProductContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn");
-    if (loggedIn === "true") {
-      setIsLoggedIn(true);
-    }
-  }, []);
+    // Check if the token exists in the cookie and validate it with the backend
+    const checkToken = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3001/api/validate-token",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        if (response.ok) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error validating token:", error);
+        setIsLoggedIn(false);
+      }
+    };
+    checkToken();
+  }, [setIsLoggedIn]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,16 +42,13 @@ const LoginPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, cart: productsInCart }),
         credentials: "include",
       });
       const data = await response.json();
       if (response.ok) {
         setError("");
         setIsLoggedIn(true);
-        // Do not store the token in localStorage, it will be handled by the cookie
-        // The server will set the token in the cookie
-        navigate("/");
       } else {
         setError(data.error || "Incorrect username or password");
       }
@@ -42,12 +57,32 @@ const LoginPage = () => {
       console.error("Login error:", err);
     }
   };
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("token"); 
-    navigate("/login");
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/api/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setIsLoggedIn(false);
+        clearCart();
+        navigate("/login");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
   };
+
+  const token = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("token="));
+  console.log("document.cookie:", document.cookie);
+  console.log("isLoggedIn:", isLoggedIn);
+  console.log("token:", token);
 
   return (
     <section className="login-section">
@@ -65,12 +100,12 @@ const LoginPage = () => {
           <form onSubmit={handleLogin}>
             <div className="input-group">
               <div className="input-field">
-                <label className="input-label">Name</label>
+                <label className="input-label">Email</label>
                 <input
                   type="email"
                   placeholder="Enter your email"
                   className="text-input"
-                  value={email}
+                  value={email || ""}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
@@ -82,7 +117,7 @@ const LoginPage = () => {
                   type="password"
                   placeholder="Enter your password"
                   className="text-input"
-                  value={password}
+                  value={password || ""}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"

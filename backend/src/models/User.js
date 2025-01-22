@@ -1,28 +1,28 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt"; 
-import validator from "validator"; 
+import bcrypt from "bcrypt";
+import validator from "validator";
 
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
     unique: true,
-    trim: true, 
+    trim: true,
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    lowercase: true, 
+    lowercase: true,
     validate: {
-      validator: validator.isEmail, 
+      validator: validator.isEmail,
       message: "Please enter a valid email address",
     },
   },
   password: {
     type: String,
     required: true,
-    minlength: 8, 
+    minlength: 8,
     select: false, // Standardmäßig wird das Passwort bei Abfragen (find, findOne) nicht zurückgegeben,
     // um die Sicherheit zu erhöhen und sensible Daten zu schützen.
   },
@@ -68,32 +68,36 @@ const userSchema = new mongoose.Schema({
 
 
 userSchema.pre("save", async function (next) {
-    const user = this;
- 
-    if (!user.isModified("password")) return next();
-  
-  
-    try {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(user.password, salt);
-      next();
-    } catch (err) {
-      next(err);
-    }
-  });
-  
+  const user = this;
 
-  userSchema.post("save", function (error, doc, next) {
-    if (error.name === "MongoServerError" && error.code === 11000) {
-      next(new Error("Email or Username must be unique"));
-    } else {
-      next(error);
-    }
-  });
-  
-  
-  userSchema.methods.comparePassword = async function (inputPassword) {
-    return bcrypt.compare(inputPassword, this.password);
-  };
-  
-  export const User = mongoose.model("User", userSchema);
+  if (!user.isModified("password")) return next();
+
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
+userSchema.methods.clearCart = function () {
+  this.cart = [];
+  return this.save();
+};
+
+userSchema.post("save", function (error, doc, next) {
+  if (error.name === "MongoServerError" && error.code === 11000) {
+    next(new Error("Email or Username must be unique"));
+  } else {
+    next(error);
+  }
+});
+
+
+userSchema.methods.comparePassword = async function (inputPassword) {
+  return bcrypt.compare(inputPassword, this.password);
+};
+
+export const User = mongoose.model("User", userSchema);
