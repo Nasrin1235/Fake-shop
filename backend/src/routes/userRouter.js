@@ -41,9 +41,9 @@ userRouter.post("/login", async (req, res) => {
 
     // Store the token in the cookie
     res.cookie("token", token, {
-      httpOnly: true, 
+      httpOnly: true,
       sameSite: "strict",
-      secure: true, 
+      secure: true,
       expires: new Date(Date.now() + 5 * 60 * 1000),
     });
     console.log("Login successful")
@@ -54,30 +54,31 @@ userRouter.post("/login", async (req, res) => {
 });
 
 userRouter.get('/validate-token', (req, res) => {
-  const token = req.cookies.token
+  const token = req.cookies.token;
 
   if (!token) {
-    return res.status(401).json({ error: 'No token provided' });
+    return res.status(401).json({ error: "No token provided" });
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return res.status(401).json({ error: 'Invalid token' });
+      return res.status(401).json({ error: "Invalid token" });
     }
-    res.status(200).json({ message: 'Token is valid', payload: decoded });
-  })
-
-})
+    res.status(200).json({ message: "Token is valid", payload: decoded });
+  });
+});
 
 // Logout User
-userRouter.get("/logout", (req, res) => {
-  res.cookie("token", '', {
+userRouter.post("/logout", (req, res) => {
+  res.cookie("token", "", {
     httpOnly: true,
-    sameSite:'strict',
-    secure: true,
+    sameSite: "strict",
+    secure: false,
     expires: new Date(0),
-  })
+  });
   res.status(200).json({ message: "Logged out successfully" });
 });
+
+
 
 export default userRouter;
