@@ -2,11 +2,12 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "../contex/ProductsContext";
 import "./LoginPage.css";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { isLoggedIn, setIsLoggedIn, setUsername, clearCart, productsInCart,data } =
+  const { isLoggedIn, setIsLoggedIn, setUsername, clearCart, productsInCart } =
     useContext(ProductContext);
   const navigate = useNavigate();
   useEffect(() => {
@@ -21,8 +22,11 @@ const LoginPage = () => {
           }
         );
         if (response.ok) {
+          const data = await response.json();
           setIsLoggedIn(true);
           setUsername(data.username);
+         
+
         } else {
           setIsLoggedIn(false);
         }
@@ -32,7 +36,7 @@ const LoginPage = () => {
       }
     };
     checkToken();
-  }, [setIsLoggedIn]);
+  }, [setIsLoggedIn, setUsername]);
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
