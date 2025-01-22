@@ -6,8 +6,16 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { isLoggedIn, setIsLoggedIn } = useContext(ProductContext);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    if (loggedIn === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -36,16 +44,11 @@ const LoginPage = () => {
   };
   const handleLogout = () => {
     setIsLoggedIn(false);
-    // Remove the token cookie on logout
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token"); 
     navigate("/login");
   };
-  const token = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("token="));
-  console.log("document.cookie:", document.cookie);
-  console.log("isLoggedIn:", isLoggedIn);
-  console.log("token:", token);
+
   return (
     <section className="login-section">
       <div className="login-container">

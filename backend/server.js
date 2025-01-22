@@ -12,6 +12,8 @@ import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser())
+
 const PORT = process.env.PORT || 3001;
 const _fileName = fileURLToPath(import.meta.url);
 const _path = path.dirname(_fileName);
