@@ -32,9 +32,6 @@ app.use(cors({
 app.use("/api", userRouter); 
 app.use("/products", productRouter); 
 
-
-
-
 const initializeProducts = async () => {
   try {
     const products = await Product.find();
