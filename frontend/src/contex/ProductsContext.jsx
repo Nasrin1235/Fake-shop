@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 
 const ProductContext = createContext();
-const productRoute = "http://localhost:3001/products";
+const productRoute = "/products";
 
 function ProductsProvider({ children }) {
   // adding "products" and "categories"
@@ -11,7 +11,7 @@ function ProductsProvider({ children }) {
 
   const fetchData = async (endpoint, setState) => {
     try {
-      const response = await fetch(`http://localhost:3001${endpoint}`);
+      const response = await fetch(`${endpoint}`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
