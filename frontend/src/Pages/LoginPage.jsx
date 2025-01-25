@@ -15,7 +15,7 @@ const LoginPage = () => {
     const checkToken = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3001/api/validate-token",
+          "/api/validate-token",
           {
             method: "GET",
             credentials: "include",
@@ -38,7 +38,7 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3001/api/login", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +71,7 @@ const LoginPage = () => {
   const handleLogout = async () => {
     console.log('productsIncart logout:',productsIncart)
     try {
-      const response = await fetch("http://localhost:3001/api/logout", {
+      const response = await fetch("/api/logout", {
         method: "POST",
         credentials: "include",
         headers: {
